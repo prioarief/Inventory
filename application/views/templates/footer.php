@@ -1,15 +1,3 @@
-<!-- Main Content -->
-<!-- <div class="main-content">
-	<section class="section">
-		<div class="section-header">
-			<h1>Dashboard</h1>
-		</div>
-
-		<div class="section-body">
-			<h1 class="text-danger">Awowkwwko</h1>
-		</div>
-	</section>
-</div> -->
 <footer class="main-footer">
 	<div class="footer-left">
 		Management Barang
@@ -23,17 +11,20 @@
 
 <!-- General JS Scripts -->
 <script src="<?= base_url() ?>assets/modules/jquery.min.js"></script>
+<script src="<?= base_url() ?>assets/modules/bootstrap/js/bootstrap.min.js"></script>
 <script src="<?= base_url() ?>assets/modules/popper.js"></script>
 <script src="<?= base_url() ?>assets/modules/tooltip.js"></script>
-<script src="<?= base_url() ?>assets/modules/bootstrap/js/bootstrap.min.js"></script>
 <script src="<?= base_url() ?>assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
 <script src="<?= base_url() ?>assets/modules/moment.min.js"></script>
 <script src="<?= base_url() ?>assets/js/stisla.js"></script>
 
+
 <!-- JS Libraies -->
 
 <!-- Page Specific JS File -->
-
+<!-- <script src="<?= base_url() ?>assets/js/page/bootstrap-modal.js"></script> -->
+<script src="<?= base_url() ?>assets/modules/sweetalert/sweetalert.min.js"></script>
+<!-- <script src="<?= base_url() ?>assets/js/page/modules-sweetalert.js"></script> -->
 <!-- Template JS File -->
 <script src="<?= base_url() ?>assets/js/scripts.js"></script>
 <script src="<?= base_url() ?>assets/js/custom.js"></script>

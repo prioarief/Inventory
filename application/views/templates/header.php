@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-	<title>Management Barang &mdash; Stisla</title>
+	<title>Management Barang &mdash; <?= $title ?></title>
 
 	<!-- General CSS Files -->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/modules/bootstrap/css/bootstrap.min.css">
@@ -16,7 +16,7 @@
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/style.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/components.css">
 	<!-- Start GA -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script> -->
 	<script>
 		window.dataLayer = window.dataLayer || [];
 
@@ -31,6 +31,7 @@
 </head>
 
 <body>
+	<input type="hidden" id="url" value="<?= base_url() ?>">
 	<div id="app">
 		<div class="main-wrapper main-wrapper-1">
 			<div class="navbar-bg bg-primary"></div>
@@ -84,12 +85,12 @@
 							</ul>
 						</li> -->
 
-						<li><a class="nav-link" href="blank.html"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
-						<li><a class="nav-link" href="blank.html"><i class="fas fa-box-open"></i> <span>Data Barang</span></a></li>
-						<li><a class="nav-link" href="blank.html"><i class="fas fa-cart-arrow-down"></i> <span>Data Penjualan</span></a></li>
-						<li><a class="nav-link" href="blank.html"><i class="fas fa-cart-plus"></i> <span>Data Pembelian</span></a></li>
-						<li><a class="nav-link" href="blank.html"><i class="fas fa-users"></i> <span>Data Pelanggan</span></a></li>
-						<li><a class="nav-link" href="blank.html"><i class="fas fa-users-cog"></i> <span>Data Admin</span></a></li>
+						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
+						<li><a class="nav-link" href="<?= base_url() ?>Barang"><i class="fas fa-box-open"></i> <span>Data Barang</span></a></li>
+						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-arrow-down"></i> <span>Data Penjualan</span></a></li>
+						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-plus"></i> <span>Data Pembelian</span></a></li>
+						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-users"></i> <span>Data Pelanggan</span></a></li>
+						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-users-cog"></i> <span>Data Admin</span></a></li>
 						
 					</ul>
 

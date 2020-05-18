@@ -43,37 +43,48 @@ $("#modal-4").fireModal({
 });
 
 $("#modal-5").fireModal({
-  title: 'Login',
-  body: $("#modal-login-part"),
-  footerClass: 'bg-whitesmoke',
-  autoFocus: false,
-  onFormSubmit: function(modal, e, form) {
-    // Form Data
-    let form_data = $(e.target).serialize();
-    console.log(form_data)
+	title: "Tambah Barang",
+	body: $("#modal-login-part"),
+	footerClass: "bg-whitesmoke",
+	autoFocus: true,
+	onFormSubmit: function (modal, e, form) {
+		// Form Data
+		const data = []
+		let form_data = $(e.target).serializeArray();
+		// let brg = $('#barang').val()
+		// let harga = $('#harga').val()
+		// let stok = $('#stok').val()
 
-    // DO AJAX HERE
-    let fake_ajax = setTimeout(function() {
-      form.stopProgress();
-      modal.find('.modal-body').prepend('<div class="alert alert-info">Please check your browser console</div>')
+		// data.push(form_data)
 
-      clearInterval(fake_ajax);
-    }, 1500);
 
-    e.preventDefault();
-  },
-  shown: function(modal, form) {
-    console.log(form)
-  },
-  buttons: [
-    {
-      text: 'Login',
-      submit: true,
-      class: 'btn btn-primary btn-shadow',
-      handler: function(modal) {
-      }
-    }
-  ]
+
+		
+		// DO AJAX HERE
+		let fake_ajax = setTimeout(function() {
+			form.stopProgress();
+		  // modal.find('.modal-body').prepend('<div class="alert alert-info">Please check your browser console</div>')
+			
+		  clearInterval(fake_ajax);
+		}, 1500);
+		
+		console.log(form_data);
+		swal("Good Job", "You clicked the button!", "success");
+		$(this).closest('.modal').modal('hide');
+
+		e.preventDefault();
+	},
+	shown: function (modal, form) {
+		console.log(form);
+	},
+	buttons: [
+		{
+			text: "Tambah Barang",
+			submit: true,
+			class: "btn btn-primary btn-shadow",
+			handler: function (modal) {},
+		},
+	],
 });
 
 $("#modal-6").fireModal({
