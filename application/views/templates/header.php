@@ -48,13 +48,13 @@
 				<ul class="navbar-nav navbar-right">
 
 					<li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-							<img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-							<div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
+							<img alt="image" src="<?= base_url() ?>assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+							<div class="d-sm-none d-lg-inline-block">Hi, <?= $this->session->userdata('nama') ?></div>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
-							<div class="dropdown-title">Admin</div>
+							<div class="dropdown-title"><?= $this->session->userdata('role') ?></div>
 							<div class="dropdown-divider"></div>
-							<a href="#" class="dropdown-item has-icon text-danger">
+							<a href="<?= base_url() ?>Admin/Logout" class="dropdown-item has-icon text-danger">
 								<i class="fas fa-sign-out-alt"></i> Logout
 							</a>
 						</div>
@@ -70,21 +70,15 @@
 						<a href="index.html">MB</a>
 					</div>
 					<ul class="sidebar-menu">
-						<!-- <li class="menu-header">Dashboard</li>
-						<li class="dropdown">
-							<a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
-							<ul class="dropdown-menu">
-								<li><a class="nav-link" href="index-0.html">General Dashboard</a></li>
-								<li><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
-							</ul>
-						</li> -->
 
 						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
 						<li><a class="nav-link" href="<?= base_url() ?>Barang"><i class="fas fa-box-open"></i> <span>Data Barang</span></a></li>
 						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-arrow-down"></i> <span>Data Penjualan</span></a></li>
 						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-plus"></i> <span>Data Pembelian</span></a></li>
 						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-users"></i> <span>Data Pelanggan</span></a></li>
-						<li><a class="nav-link" href="<?= base_url() ?>Admin"><i class="fas fa-users-cog"></i> <span>Data Admin</span></a></li>
+						<?php if($this->session->userdata('role') == 'Super Admin'): ?>
+							<li><a class="nav-link" href="<?= base_url() ?>Admin"><i class="fas fa-users-cog"></i> <span>Data Admin</span></a></li>
+						<?php endif; ?>
 
 					</ul>
 

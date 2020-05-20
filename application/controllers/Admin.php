@@ -8,25 +8,23 @@ class Admin extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('AdminModel', 'Admin');
+		$this->load->model('AuthModel', 'Auth');
 	}
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
+	public function is_logged()
+	{
+		if (!$this->session->userdata('role')) {
+			redirect('Admin/Auth');
+		} else {
+			if ($this->session->userdata('role') == 'Admin') {
+				redirect('Admin/Auth');
+			}
+		}
+	}
+
 	public function index()
 	{
+		$this->is_logged();
 		$data = [
 			'title' => 'Data Admin',
 			'admin' => $this->Admin->get(),
@@ -38,11 +36,50 @@ class Admin extends CI_Controller
 		$this->load->view('templates/footer',);
 	}
 
+	public function Auth()
+	{
+		$data = [
+			'action' => 'Admin/ActionAuth',
+			'regis' => false,
+		];
+
+		$this->load->view('auth/login', $data);
+	}
+
+	public function ActionAuth()
+	{
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+
+		$req = $this->Admin->getByUsername($username);
+		if ($req) {
+			if (password_verify($password, $req['password'])) {
+				$data = [
+					'nama' => $req['nama'],
+					'username' => $req['username'],
+					'role' => $req['role'],
+				];
+
+				$this->session->set_userdata($data);
+				$this->session->set_flashdata('alert', 'Login Berhasil');
+				redirect('Welcome');
+			} else {
+				$this->session->set_flashdata('alert', 'Password Salah!');
+				redirect('Admin/Auth');
+			}
+		} else {
+			$this->session->set_flashdata('alert', 'Username Tidak Terdaftar, silakan registrasi!');
+			redirect('Admin/Auth');
+		}
+	}
+
+
+
 	public function AddAdmin()
 	{
 		$nama = $this->input->post('nama');
 		$username = $this->input->post('username');
-		$password = $this->input->post('password');
+		$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
 		$role = $this->input->post('role');
 
 		$data = [
@@ -54,21 +91,34 @@ class Admin extends CI_Controller
 
 		echo json_encode($this->Admin->AddAdmin($data));
 	}
-	
+
 	public function EditAdmin()
 	{
-		$nama = $this->input->post('nama');
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
-		$role = $this->input->post('role');
-		$id = $this->input->post('id');
+		if (empty($this->input->post('password'))) {
+			$nama = $this->input->post('nama');
+			$username = $this->input->post('username');
+			$role = $this->input->post('role');
+			$id = $this->input->post('id');
 
-		$data = [
-			'username' => $username,
-			'password' => $password,
-			'nama' => $nama,
-			'role' => $role,
-		];
+			$data = [
+				'username' => $username,
+				'nama' => $nama,
+				'role' => $role,
+			];
+		} else {
+			$nama = $this->input->post('nama');
+			$username = $this->input->post('username');
+			$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+			$role = $this->input->post('role');
+			$id = $this->input->post('id');
+
+			$data = [
+				'username' => $username,
+				'password' => $password,
+				'nama' => $nama,
+				'role' => $role,
+			];
+		}
 
 		echo json_encode($this->Admin->EditAdmin($id, $data));
 	}
@@ -99,5 +149,11 @@ class Admin extends CI_Controller
 		} else {
 			redirect('Admin');
 		}
+	}
+
+	public function Logout()
+	{
+		$this->session->sess_destroy();
+		redirect('Admin/Auth');
 	}
 }

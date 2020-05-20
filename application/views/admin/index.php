@@ -19,7 +19,6 @@
 										<tr>
 											<th class="text-center">#</th>
 											<th>Username</th>
-											<th>Password</th>
 											<th>Nama</th>
 											<th>Role</th>
 											<th>Action</th>
@@ -31,7 +30,6 @@
 											<tr>
 												<td class="text-center"><?= $no ?></td>
 												<td><?= $adm['username'] ?></td>
-												<td><?= $adm['password'] ?></td>
 												<td><?= $adm['nama'] ?></td>
 												<td><?= $adm['role'] ?></td>
 												<td>
@@ -95,7 +93,7 @@
 										<i class="fas fa-lock"></i>
 									</div>
 								</div>
-								<input type="text" class="form-control" placeholder="Password" id="password" name="password">
+								<input type="password" class="form-control" placeholder="Password" id="password" name="password">
 							</div>
 						</div>
 
@@ -170,7 +168,7 @@
 										<i class="fas fa-lock"></i>
 									</div>
 								</div>
-								<input type="text" class="form-control" placeholder="Password" id="edit-password" name="password">
+								<input type="password" class="form-control" placeholder="Diisi jika ingin mengganti password" id="edit-password" name="password">
 							</div>
 						</div>
 
@@ -182,7 +180,7 @@
 										<i class="fas fa-users"></i>
 									</div>
 								</div>
-								<select class="form-control mb-4" name="role">
+								<select class="form-control mb-4" name="role" id="edit-role">
 									<option selected disabled>Pilih role</option>
 									<option value="Admin">Admin</option>
 									<option value="Super Admin">Super Admin</option>

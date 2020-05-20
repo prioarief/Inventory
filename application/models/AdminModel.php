@@ -11,6 +11,11 @@ class AdminModel extends CI_Model
 	{
 		return $this->db->get_where('admin', ['id' => $id])->row_array();
 	}
+	
+	public function getByUsername($username)
+	{
+		return $this->db->get_where('admin', ['username' => $username])->row_array();
+	}
 
 	public function AddAdmin($data)
 	{

@@ -73,7 +73,7 @@ $(document).ready(function () {
 
 				$("input#edit-nama").val(result.nama);
 				$("input#edit-username").val(result.username);
-				$("input#edit-password").val(result.password);
+				// $("input#edit-password").val(result.password);
 				$("div#editRole select").val(result.role);
 				$("input#edit-id").val(result.id);
 			},
@@ -84,22 +84,20 @@ $(document).ready(function () {
 		rules: {
 			nama: "required",
 			username: "required",
-			password: "required",
 			role: "required",
 		},
 
 		messages: {
 			nama: "Masukkan Nama",
 			username: "Masukkan username",
-			password: "Masukkan password",
 			role: "Pilih role!",
 		},
 
 		submitHandler: function (form) {
 			let nama = $("#edit-nama").val();
 			let username = $("#edit-username").val();
-			let password = $("#edit-stok").val();
-			let role = $('select[name=role] option').filter(':selected').val();
+			let password = $("#edit-password").val();
+			let role = $('select[id=edit-role] option').filter(':selected').val();
 			let id = $("#edit-id").val();
 
 			// DO AJAX HERE
