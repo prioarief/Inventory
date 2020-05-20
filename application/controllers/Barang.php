@@ -79,9 +79,9 @@ class Barang extends CI_Controller
 			redirect('Barang');
 		}
 
-		$req = $this->Barang->DeleteBarang($id);
+		$req = $this->Barang->getById($id);
 		if ($req) {
-			echo json_encode($req);
+			echo json_encode($this->Barang->DeleteBarang($id));
 		} else {
 			redirect('Barang');
 		}

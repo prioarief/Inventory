@@ -52,16 +52,7 @@
 							<div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
-							<div class="dropdown-title">Logged in 5 min ago</div>
-							<!-- <a href="features-profile.html" class="dropdown-item has-icon">
-								<i class="far fa-user"></i> Profile
-							</a>
-							<a href="features-activities.html" class="dropdown-item has-icon">
-								<i class="fas fa-bolt"></i> Activities
-							</a>
-							<a href="features-settings.html" class="dropdown-item has-icon">
-								<i class="fas fa-cog"></i> Settings
-							</a> -->
+							<div class="dropdown-title">Admin</div>
 							<div class="dropdown-divider"></div>
 							<a href="#" class="dropdown-item has-icon text-danger">
 								<i class="fas fa-sign-out-alt"></i> Logout
@@ -93,7 +84,7 @@
 						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-arrow-down"></i> <span>Data Penjualan</span></a></li>
 						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-plus"></i> <span>Data Pembelian</span></a></li>
 						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-users"></i> <span>Data Pelanggan</span></a></li>
-						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-users-cog"></i> <span>Data Admin</span></a></li>
+						<li><a class="nav-link" href="<?= base_url() ?>Admin"><i class="fas fa-users-cog"></i> <span>Data Admin</span></a></li>
 
 					</ul>
 
