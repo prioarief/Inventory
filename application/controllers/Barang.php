@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Barang extends CI_Controller {
+class Barang extends CI_Controller
+{
 
 	public function __construct()
 	{
@@ -28,12 +29,13 @@ class Barang extends CI_Controller {
 	{
 		$data = [
 			'title' => 'Data Barang',
-			'barang' => $this->Barang->get()
+			'barang' => $this->Barang->get(),
+			'js' => 'barang.js'
 		];
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('barang/index', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('templates/footer',);
 	}
 
 	public function AddBarang()
@@ -42,6 +44,10 @@ class Barang extends CI_Controller {
 		$harga = $this->input->post('harga');
 		$stok = $this->input->post('stok');
 
+		// if(empty($barang) || empty(int($barang) || empty(int($stok)))){
+		// 	return false;
+		// }
+
 		$data = [
 			'nama_barang' => $barang,
 			'harga' => $harga,
@@ -49,5 +55,49 @@ class Barang extends CI_Controller {
 		];
 
 		echo json_encode($this->Barang->AddBarang($data));
+	}
+	
+	public function EditBarang()
+	{
+		$barang = $this->input->post('barang');
+		$harga = $this->input->post('harga');
+		$stok = $this->input->post('stok');
+		$id = $this->input->post('id');
+
+		$data = [
+			'nama_barang' => $barang,
+			'harga' => $harga,
+			'stok' => $stok,
+		];
+
+		echo json_encode($this->Barang->EditBarang($id, $data));
+	}
+
+	public function DeleteBarang($id = null)
+	{
+		if (is_null($id)) {
+			redirect('Barang');
+		}
+
+		$req = $this->Barang->DeleteBarang($id);
+		if ($req) {
+			echo json_encode($req);
+		} else {
+			redirect('Barang');
+		}
+	}
+
+	public function Detail($id = null)
+	{
+		if (is_null($id)) {
+			redirect('Barang');
+		}
+
+		$req = $this->Barang->getById($id);
+		if ($req) {
+			echo json_encode($req);
+		} else {
+			redirect('Barang');
+		}
 	}
 }

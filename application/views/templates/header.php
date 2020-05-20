@@ -11,6 +11,9 @@
 	<link rel="stylesheet" href="<?= base_url() ?>assets/modules/fontawesome/css/all.min.css">
 
 	<!-- CSS Libraries -->
+	<link rel="stylesheet" href="<?= base_url() ?>assets/modules/datatables/datatables.min.css">
+	<link rel="stylesheet" href="<?= base_url() ?>assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+	<link rel="stylesheet" href="<?= base_url() ?>assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css">
 
 	<!-- Template CSS -->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/style.css">
@@ -40,10 +43,10 @@
 					<ul class="navbar-nav mr-3">
 						<li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
 					</ul>
-					
+
 				</form>
 				<ul class="navbar-nav navbar-right">
-					
+
 					<li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
 							<img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
 							<div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
@@ -91,10 +94,9 @@
 						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-plus"></i> <span>Data Pembelian</span></a></li>
 						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-users"></i> <span>Data Pelanggan</span></a></li>
 						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-users-cog"></i> <span>Data Admin</span></a></li>
-						
+
 					</ul>
 
-					
+
 				</aside>
 			</div>
-
