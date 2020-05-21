@@ -11,20 +11,20 @@ class Admin extends CI_Controller
 		$this->load->model('AuthModel', 'Auth');
 	}
 
-	public function is_logged()
-	{
-		if (!$this->session->userdata('role')) {
-			redirect('Admin/Auth');
-		} else {
-			if ($this->session->userdata('role') == 'Admin') {
-				redirect('Admin/Auth');
-			}
-		}
-	}
+	// public function is_logged()
+	// {
+	// 	if (!$this->session->userdata('role')) {
+	// 		redirect('Admin/Auth');
+	// 	} else {
+	// 		if ($this->session->userdata('role') == 'Admin') {
+	// 			redirect('Admin/Auth');
+	// 		}
+	// 	}
+	// }
 
 	public function index()
 	{
-		$this->is_logged();
+		secure();
 		$data = [
 			'title' => 'Data Admin',
 			'admin' => $this->Admin->get(),
@@ -38,6 +38,7 @@ class Admin extends CI_Controller
 
 	public function Auth()
 	{
+		login();
 		$data = [
 			'action' => 'Admin/ActionAuth',
 			'regis' => false,
