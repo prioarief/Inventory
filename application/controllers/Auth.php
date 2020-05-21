@@ -21,6 +21,16 @@ class Auth extends CI_Controller
 		$this->load->view('auth/login', $data);
 	}
 
+	public function Register()
+	{
+		// $data = [
+		// 	'action' => 'Auth/ActionAuth',
+		// 	'regis' => true,
+		// ];
+
+		$this->load->view('auth/register');
+	}
+
 	public function ActionAuth()
 	{
 		$username = $this->input->post('username');
@@ -39,11 +49,39 @@ class Auth extends CI_Controller
 				redirect('Welcome');
 			} else {
 				$this->session->set_flashdata('alert', 'Password Salah!');
-				redirect('Admin/Auth');
+				redirect('Auth');
 			}
 		} else {
 			$this->session->set_flashdata('alert', 'Username Tidak Terdaftar, silakan registrasi!');
-			redirect('Admin/Auth');
+			redirect('Auth');
+		}
+	}
+
+	public function ActRegister()
+	{
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+		$telp = $this->input->post('telp');
+		$alamat = $this->input->post('alamat');
+		$nama = $this->input->post('nama');
+
+		$req = $this->Auth->getUserByUsername($username);
+		if ($req) {
+			$this->session->set_flashdata('alert', 'Username Sudah Ada!');
+			redirect('Auth/Register');
+		} else {
+			$data = [
+				'username' => $username,
+				'password' => password_hash($password, PASSWORD_DEFAULT),
+				'nama' => $nama,
+				'telp' => $telp,
+				'alamat' => $alamat,
+			];
+
+			$this->Auth->Registrasi($data);
+
+			$this->session->set_flashdata('alertt', 'Registrasi Berhasil, silakan login!');
+			redirect('Auth/Index');
 		}
 	}
 }

@@ -48,6 +48,8 @@
 							<div class="container">
 								<?php if ($this->session->flashdata('alert')) : ?>
 									<div class="alert alert-danger"><?= $this->session->flashdata('alert') ?></div>
+								<?php elseif ($this->session->flashdata('alertt')) : ?>
+									<div class="alert alert-success"><?= $this->session->flashdata('alertt') ?></div>
 								<?php endif; ?>
 							</div>
 
