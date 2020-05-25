@@ -13,6 +13,7 @@ class Auth extends CI_Controller
 
 	public function index()
 	{
+		// login();
 		$data = [
 			'action' => 'Auth/ActionAuth',
 			'regis' => true,
@@ -42,6 +43,7 @@ class Auth extends CI_Controller
 				$data = [
 					'nama' => $req['nama'],
 					'username' => $req['username'],
+					'buyer' => true,
 				];
 
 				$this->session->set_userdata($data);
@@ -83,6 +85,12 @@ class Auth extends CI_Controller
 			$this->session->set_flashdata('alertt', 'Registrasi Berhasil, silakan login!');
 			redirect('Auth/Index');
 		}
+	}
+
+	public function Logout()
+	{
+		$this->session->sess_destroy();
+		redirect('Auth');
 	}
 }
         

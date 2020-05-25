@@ -12,36 +12,104 @@
 							<h4 class="d-block">Update Data dan Stok Barang</h4>
 						</div>
 						<div class="card-body">
-							<button class="btn btn-primary btn-sm my-3" data-toggle="modal" data-target="#AddBarang">Tambah Barang!</button>
-							<div class="table-responsive">
-								<table class="table table-striped" id="table-1">
-									<thead>
-										<tr>
-											<th class="text-center">#</th>
-											<th>Nama Barang</th>
-											<th>Harga</th>
-											<th>Stok</th>
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php $no = 1; ?>
-										<?php foreach ($barang as $brg) : ?>
+							<?php if ($this->session->userdata('role')) : ?>
+								<button class="btn btn-primary btn-sm my-3" data-toggle="modal" data-target="#AddBarang">Tambah Barang!</button>
+							<?php endif; ?>
+
+							<?php if ($this->session->userdata('role')) : ?>
+								<div class="table-responsive">
+									<table class="table table-striped" id="table-1">
+										<thead>
 											<tr>
-												<td class="text-center"><?= $no ?></td>
-												<td><?= $brg['nama_barang'] ?></td>
-												<td>Rp. <?= number_format($brg['harga']) ?></td>
-												<td><?= $brg['stok'] ?></td>
-												<td>
-													<a data-id="<?= $brg['id'] ?>" href="#" class="btn btn-info btn-sm" title="Edit" data-toggle="modal" data-target="#EditBarang"><i class="fas fa-pencil-alt"></i></a>
-													<a data-id="<?= $brg['id'] ?>" data-toggle="modal" data-target="#HapusBarang" href="<?= $brg['id'] ?>" id="btnDelete" class="btn btn-danger btn-sm btnDelete" title="Delete"><i class="fas fa-trash"></i></a>
-												</td>
+												<th class="text-center">#</th>
+												<th>Nama Barang</th>
+												<th>Harga</th>
+												<th>Stok</th>
+												<th>Action</th>
 											</tr>
-											<?php $no++ ?>
-										<?php endforeach; ?>
-									</tbody>
-								</table>
-							</div>
+										</thead>
+										<tbody>
+											<?php $no = 1; ?>
+											<?php foreach ($barang as $brg) : ?>
+												<tr>
+													<td class="text-center"><?= $no ?></td>
+													<td><?= $brg['nama_barang'] ?></td>
+													<td>Rp. <?= number_format($brg['harga']) ?></td>
+													<td><?= $brg['stok'] ?></td>
+													<td>
+														<?php if ($this->session->userdata('role')) : ?>
+															<a data-id="<?= $brg['id'] ?>" href="#" class="btn btn-info btn-sm" title="Edit" data-toggle="modal" data-target="#EditBarang"><i class="fas fa-pencil-alt"></i></a>
+															<a data-id="<?= $brg['id'] ?>" data-toggle="modal" data-target="#HapusBarang" href="<?= $brg['id'] ?>" id="btnDelete" class="btn btn-danger btn-sm btnDelete" title="Delete"><i class="fas fa-trash"></i></a>
+															<!-- <?php else : ?>
+															<a data-id="<?= $brg['id'] ?>" data-toggle="modal" data-target="#Cart" href="<?= $brg['id'] ?>" id="" class="btn btn-success btn-sm " title="Beli"><i class="fas fa-shopping-cart"></i></a> -->
+														<?php endif; ?>
+													</td>
+												</tr>
+												<?php $no++ ?>
+											<?php endforeach; ?>
+										</tbody>
+									</table>
+								</div>
+							<?php endif; ?>
+
+							<?php if ($this->session->userdata('buyer')) : ?>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="table-responsive">
+											<table class="table table-striped" id="table-1">
+												<thead>
+													<tr>
+														<th class="text-center">#</th>
+														<th>Nama Barang</th>
+														<th>Harga</th>
+														<th>Stok</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php $no = 1; ?>
+													<?php foreach ($barang as $brg) : ?>
+														<tr>
+															<td class="text-center"><?= $no ?></td>
+															<td><?= $brg['nama_barang'] ?></td>
+															<td>Rp. <?= number_format($brg['harga']) ?></td>
+															<td><?= $brg['stok'] ?></td>
+															<td>
+																<?php if ($this->session->userdata('role')) : ?>
+																	<a data-id="<?= $brg['id'] ?>" href="#" class="btn btn-info btn-sm" title="Edit" data-toggle="modal" data-target="#EditBarang"><i class="fas fa-pencil-alt"></i></a>
+																	<a data-id="<?= $brg['id'] ?>" data-toggle="modal" data-target="#HapusBarang" href="<?= $brg['id'] ?>" id="btnDelete" class="btn btn-danger btn-sm btnDelete" title="Delete"><i class="fas fa-trash"></i></a>
+																<?php else : ?>
+																	<a data-id="<?= $brg['id'] ?>"  data-toggle="modal" data-target="#Cart" href="<?= $brg['id'] ?>" id="" class="btn btn-success btn-sm " title="Beli"><i class="fas fa-shopping-cart"></i></a>
+																<?php endif; ?>
+															</td>
+														</tr>
+														<?php $no++ ?>
+													<?php endforeach; ?>
+												</tbody>
+											</table>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<h4>Keranjang</h4>
+										<table class="table table-responsive">
+											<thead>
+												<tr>
+													<th>Produk</th>
+													<th>Harga</th>
+													<th>Qty</th>
+													<th>Subtotal</th>
+													<th>Aksi</th>
+												</tr>
+											</thead>
+											<tbody id="detail_cart">
+											
+											</tbody>
+
+										</table>
+									</div>
+								</div>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
@@ -163,6 +231,78 @@
 		</div>
 	</div>
 	<!-- End Modal -->
+
+	<?php if ($this->session->userdata('buyer')) : ?>
+		<!-- Modal Beli -->
+		<div class="modal fade Cart" id="Cart" tabindex="-1" role="dialog" aria-labelledby="Cart" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Beli Barang</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form method="post" id="CartForm">
+							<input type="hidden" name="id" id="barang-id">
+							<div class="form-group">
+								<label>Nama Barang</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fas fa-box-open"></i>
+										</div>
+									</div>
+									<input type="text" class="form-control" placeholder="Barang" readonly id="cart-barang" name="barang">
+
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Harga</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											Rp
+										</div>
+									</div>
+									<input type="number" min="1" class="form-control" placeholder="Harga" readonly id="cart-harga" name="harga">
+								</div>
+							</div>
+							<div class="form-group">
+								<label>Stok</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fas fa-recycle"></i>
+										</div>
+									</div>
+									<input type="number" min="1" class="form-control" placeholder="Stok" readonly id="cart-stok" name="stok">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label>Jumlah Pembelian</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fas fa-shopping-bag"></i>
+										</div>
+									</div>
+									<input type="number" min="1" class="form-control" placeholder="Jumlah Pembelian" id="cart-jumlah" name="jumlah">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<button class="btn btn-primary float-right">Tambah Ke Keranjang</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Modal -->
+	<?php endif; ?>
 
 	<!-- Modal Delete -->
 	<div class="modal fade DeleteBarang" id="HapusBarang" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

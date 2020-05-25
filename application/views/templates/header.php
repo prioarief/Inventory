@@ -54,9 +54,15 @@
 						<div class="dropdown-menu dropdown-menu-right">
 							<div class="dropdown-title"><?= $this->session->userdata('role') ?></div>
 							<div class="dropdown-divider"></div>
-							<a href="<?= base_url() ?>Admin/Logout" class="dropdown-item has-icon text-danger">
-								<i class="fas fa-sign-out-alt"></i> Logout
-							</a>
+							<?php if ($this->session->userdata('role')) : ?>
+								<a href="<?= base_url() ?>Admin/Logout" class="dropdown-item has-icon text-danger">
+									<i class="fas fa-sign-out-alt"></i> Logout
+								</a>
+							<?php else : ?>
+								<a href="<?= base_url() ?>Auth/Logout" class="dropdown-item has-icon text-danger">
+									<i class="fas fa-sign-out-alt"></i> Logout
+								</a>
+							<?php endif; ?>
 						</div>
 					</li>
 				</ul>
@@ -71,13 +77,19 @@
 					</div>
 					<ul class="sidebar-menu">
 
-						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
-						<li><a class="nav-link" href="<?= base_url() ?>Barang"><i class="fas fa-box-open"></i> <span>Data Barang</span></a></li>
-						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-arrow-down"></i> <span>Data Penjualan</span></a></li>
-						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-plus"></i> <span>Data Pembelian</span></a></li>
-						<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-users"></i> <span>Data Pelanggan</span></a></li>
-						<?php if($this->session->userdata('role') == 'Super Admin'): ?>
-							<li><a class="nav-link" href="<?= base_url() ?>Admin"><i class="fas fa-users-cog"></i> <span>Data Admin</span></a></li>
+						<?php if ($this->session->userdata('role')) : ?>
+							<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
+							<li><a class="nav-link" href="<?= base_url() ?>Barang"><i class="fas fa-box-open"></i> <span>Data Barang</span></a></li>
+							<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-arrow-down"></i> <span>Data Penjualan</span></a></li>
+							<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-plus"></i> <span>Data Pembelian</span></a></li>
+							<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-users"></i> <span>Data Pelanggan</span></a></li>
+							<?php if ($this->session->userdata('role') == 'Super Admin') : ?>
+								<li><a class="nav-link" href="<?= base_url() ?>Admin"><i class="fas fa-users-cog"></i> <span>Data Admin</span></a></li>
+							<?php endif; ?>
+						<?php elseif ($this->session->userdata('buyer')) : ?>
+							<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
+							<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-chart-area"></i> <span>Riwayat Transaksi</span></a></li>
+							<li><a class="nav-link" href="<?= base_url() ?>Barang"><i class="fas fa-box-open"></i> <span>Beli Barang</span></a></li>
 						<?php endif; ?>
 
 					</ul>

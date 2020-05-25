@@ -27,6 +27,9 @@ class Barang extends CI_Controller
 	 */
 	public function index()
 	{
+		if(!$this->session->userdata('nama')){
+			redirect('Auth');
+		}
 		$data = [
 			'title' => 'Data Barang',
 			'barang' => $this->Barang->get(),
@@ -40,6 +43,7 @@ class Barang extends CI_Controller
 
 	public function AddBarang()
 	{
+		$this->access();
 		$barang = $this->input->post('barang');
 		$harga = $this->input->post('harga');
 		$stok = $this->input->post('stok');
@@ -59,6 +63,7 @@ class Barang extends CI_Controller
 	
 	public function EditBarang()
 	{
+		$this->access();
 		$barang = $this->input->post('barang');
 		$harga = $this->input->post('harga');
 		$stok = $this->input->post('stok');
@@ -75,6 +80,7 @@ class Barang extends CI_Controller
 
 	public function DeleteBarang($id = null)
 	{
+		$this->access();
 		if (is_null($id)) {
 			redirect('Barang');
 		}
@@ -98,6 +104,17 @@ class Barang extends CI_Controller
 			echo json_encode($req);
 		} else {
 			redirect('Barang');
+		}
+	}
+
+	private function access()
+	{
+		if(!$this->session->userdata('nama')){
+			redirect('Auth');
+		}else{
+			if($this->session->userdata('buyer')){
+				redirect('Welcome');
+			}
 		}
 	}
 }

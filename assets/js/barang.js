@@ -184,4 +184,103 @@ $(document).ready(function () {
 			});
 		});
 	});
+
+	// Event Cart
+	$(".Cart").on("show.bs.modal", function (e) {
+		let button = $(e.relatedTarget);
+		let id = button.data("id");
+		$.ajax({
+			url: url + "Barang/Detail/" + id,
+			data: {
+				id: id,
+			},
+			method: "post",
+			success: function (response) {
+				// console.log(response)
+				const result = JSON.parse(response);
+
+				$("input#cart-barang").val(result.nama_barang);
+				$("input#cart-harga").val(result.harga);
+				$("input#cart-stok").val(result.stok);
+				$("input#cart-jumlah").attr({
+					max: result.stok,
+					placeholder: `Maksimal ${result.stok}`,
+				});
+				$("input#barang-id").val(result.id);
+			},
+		});
+	});
+
+	$("#CartForm").validate({
+		rules: {
+			jumlah: {
+				required: true,
+				number: true,
+			},
+		},
+
+		messages: {
+			jumlah: {
+				required: "Masukkan jumlah pembelian",
+				number: "Masukkan Angka!!",
+			},
+		},
+
+		submitHandler: function (form) {
+			let barang = $("#cart-barang").val();
+			let harga = $("#cart-harga").val();
+			let jumlah = $("#cart-jumlah").val();
+			let id = $("#barang-id").val();
+			$("#Cart").modal("toggle");
+
+			// DO AJAX HERE
+			$.ajax({
+				url: url + "Keranjang/TambahKeranjang/",
+				data: {
+					id: id,
+					barang: barang,
+					harga: harga,
+					jumlah: jumlah,
+				},
+				method: "post",
+				success: function (data) {
+					swal("Sukses", "Berhasil Masuk Keranjang!", "success");
+
+					let fake_ajax = setTimeout(function () {
+						clearInterval(fake_ajax);
+					}, 1500);
+					$("#cart-jumlah").val("");
+					$("#detail_cart").html(data);
+				},
+				error: function (err) {
+					swal("Gagal", "Data Gagal Di Edit!", "error");
+					let fake_ajax = setTimeout(function () {
+						// $(this).closest(".modal").modal("hide");
+						clearInterval(fake_ajax);
+					}, 1000);
+				},
+			});
+		},
+	});
+
+	// Load shopping cart
+	// $.ajax({
+	// 	url: url + "Keranjang/LihatKeranjang/",
+	// 	method: "post",
+	// 	success: function (response) {
+	// 		// console.log(response)
+	// 		const result = JSON.parse(response);
+
+	// 		// console.log(result.c4ca4238a0b923820dcc509a6f75849b)
+	// 		let data = Object.keys(result).map((val, index) => [result[val]]);
+	// 		let hasil = data.forEach(items => {
+	// 			items.forEach(item => {
+	// 				console.log(item.name)
+	// 			})
+	// 		})
+	// 	},
+	// });
+
+	// Load shopping cart
+	$("#detail_cart").load(`${url}Keranjang/LihatKeranjang`);
 });

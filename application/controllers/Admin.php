@@ -38,7 +38,7 @@ class Admin extends CI_Controller
 
 	public function Auth()
 	{
-		login();
+		// login();
 		$data = [
 			'action' => 'Admin/ActionAuth',
 			'regis' => false,
