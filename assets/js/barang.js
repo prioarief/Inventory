@@ -250,7 +250,6 @@ $(document).ready(function () {
 						clearInterval(fake_ajax);
 					}, 1500);
 					$("#cart-jumlah").val("");
-					$("#detail_cart").html(data);
 				},
 				error: function (err) {
 					swal("Gagal", "Data Gagal Di Edit!", "error");
@@ -275,12 +274,12 @@ $(document).ready(function () {
 	// 		let data = Object.keys(result).map((val, index) => [result[val]]);
 	// 		let hasil = data.forEach(items => {
 	// 			items.forEach(item => {
-	// 				console.log(item.name)
+	// 				console.log(item.qty)
 	// 			})
 	// 		})
 	// 	},
 	// });
 
 	// Load shopping cart
-	$("#detail_cart").load(`${url}Keranjang/LihatKeranjang`);
+	// $("#keranjang").html('Keranjang Belanja (0)');
 });

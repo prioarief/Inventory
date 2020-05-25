@@ -11,32 +11,20 @@ class Keranjang extends CI_Controller
 
 	public function index()
 	{
-		$output = '';
-		$no = 0;
-		foreach ($this->cart->contents() as $items) {
-			$no++;
-			$output .= '
-				<tr>
-					<td>' . $items['name'] . '</td>
-					<td>' . number_format($items['price']) . '</td>
-					<td>' . $items['qty'] . '</td>
-					<td>' . number_format($items['subtotal']) . '</td>
-					<td><button type="button" id="' . $items['rowid'] . '" class="hapus_cart btn btn-danger btn-xs">Batal</button></td>
-				</tr>
-			';
-		}
-		$output .= '
-			<tr>
-				<th colspan="3">Total</th>
-				<th colspan="2">' . 'Rp ' . number_format($this->cart->total()) . '</th>
-			</tr>
-		';
-		return $output;
+		$data = [
+			'title' => 'Keranjang Belanja',
+			'barang' => $this->cart->contents(),
+			'js' => 'keranjang.js'
+		];
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('keranjang/index');
+		$this->load->view('templates/footer', $data);
 	}
 
 	public function LihatKeranjang()
 	{
-		echo $this->index();
+		echo json_encode($this->cart->contents());
 	}
 
 	public function TambahKeranjang()
@@ -59,12 +47,33 @@ class Keranjang extends CI_Controller
 
 	public function HapusKeranjang()
 	{
+		// $data = [
+		// 	'rowid' => 'c81e728d9d4c2f636f067f89cc14862c',
+		// 	'qty' => 0
+		// ];
+
+		$id = $this->input->post('id');
+
+		$this->cart->remove($id);
+		redirect('Keranjang');
+	}
+	
+	public function EditKeranjang()
+	{
+		$id = $this->input->post('id');
+		$qty = $this->input->post('qty');
 		$data = [
-			'rowid' => 'c81e728d9d4c2f636f067f89cc14862c',
-			'qty' => 0
+			'rowid' => $id,
+			'qty' => $qty
 		];
+
 
 		$this->cart->update($data);
 		redirect('Keranjang');
+	}
+
+	public function CountItems()
+	{
+		echo (count($this->cart->contents()));
 	}
 }

@@ -90,6 +90,13 @@
 							<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
 							<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-chart-area"></i> <span>Riwayat Transaksi</span></a></li>
 							<li><a class="nav-link" href="<?= base_url() ?>Barang"><i class="fas fa-box-open"></i> <span>Beli Barang</span></a></li>
+							<li>
+								<a class="nav-link" href="<?= base_url() ?>Keranjang"><i class="fas fa-shopping-cart"></i>
+									<span id="keranjang">Keranjang Belanja
+										<small class="text-danger">(<?= count($this->cart->contents()) ?>)</small>
+									</span>
+								</a>
+							</li>
 						<?php endif; ?>
 
 					</ul>

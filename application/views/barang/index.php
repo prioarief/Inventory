@@ -54,7 +54,7 @@
 
 							<?php if ($this->session->userdata('buyer')) : ?>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md">
 										<div class="table-responsive">
 											<table class="table table-striped" id="table-1">
 												<thead>
@@ -90,7 +90,7 @@
 										</div>
 									</div>
 
-									<div class="col-md-6">
+									<!-- <div class="col-md-6">
 										<h4>Keranjang</h4>
 										<table class="table table-responsive">
 											<thead>
@@ -107,7 +107,7 @@
 											</tbody>
 
 										</table>
-									</div>
+									</div> -->
 								</div>
 							<?php endif; ?>
 						</div>
