@@ -18,6 +18,7 @@ class Barang extends CI_Controller
 		$data = [
 			'title' => 'Data Barang',
 			'barang' => $this->Barang->get(),
+			'stok($id)' => $this->Barang->getById($id = null),
 			'js' => 'barang.js'
 		];
 
@@ -89,6 +90,14 @@ class Barang extends CI_Controller
 			echo json_encode($req);
 		} else {
 			redirect('Barang');
+		}
+	}
+
+	public function Stok()
+	{
+		foreach($this->cart->contents() as $data){
+			$req = $this->Barang->getById($data['id']);
+			echo json_encode($req);
 		}
 	}
 

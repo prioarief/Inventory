@@ -15,6 +15,7 @@ class Keranjang extends CI_Controller
 		$data = [
 			'title' => 'Keranjang Belanja',
 			'barang' => $this->cart->contents(),
+			'data_barang' => $this->Barang->get(),
 			'js' => 'keranjang.js'
 		];
 
@@ -56,6 +57,14 @@ class Keranjang extends CI_Controller
 
 			$this->cart->insert($data);
 		}
+		$data = [
+			'id' => $id,
+			'name' => $barang,
+			'price' => $harga,
+			'qty' => $jumlah,
+		];
+
+		$this->cart->insert($data);
 	}
 
 	public function HapusKeranjang()

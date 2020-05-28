@@ -41,7 +41,10 @@
 															<td><?= $brg['name'] ?></td>
 															<td>Rp. <?= number_format($brg['price']) ?></td>
 															<td style="width: 140px">
-																<input type="number" min="1" value="<?= $brg['qty'] ?>"  id="qty<?= $brg['rowid'] ?>" class="form-control qty <?= $brg['id'] ?>">
+																<?php if($req = $this->Barang->getById($brg['id'])): ?>
+																	<input type="number" data-id="<?= $brg['id'] ?>" min="1" max="<?= $req['stok'] ?>" value="<?= $brg['qty'] ?>"  id="qty<?= $brg['rowid'] ?>" class="form-control qty <?= $brg['id'] ?>">
+																	<small class="text-muted stok">Max <?= $req['stok'] ?></small>
+																<?php  endif;?>
 															</td>
 															<td>Rp. <?= number_format($brg['subtotal']) ?></td>
 															<td>
