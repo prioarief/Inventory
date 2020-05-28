@@ -2,6 +2,8 @@ $(document).ready(function () {
 	let url = $("input#url").val();
 
 	
+
+	
 	const tampilData = () => {
 		$.ajax({
 			url: url + "Keranjang/LihatKeranjang/",
@@ -73,7 +75,12 @@ $(document).ready(function () {
 	//Edit Item Cart
 	$('.edit_cart').on('click',function(){
 		let id=$(this).attr("id"); 
+		let barang=$(this).data("id"); 
 		let qty = $(`#qty${id}`).val()
+
+		if(qty < 1){
+			return false
+		}
 
 		$.ajax({
 			url : `${url}Keranjang/EditKeranjang/`,
@@ -81,10 +88,31 @@ $(document).ready(function () {
 			data : {
 				id : id,
 				qty : qty,
+				barang : barang,
 			},
 			success :function(data){
+				if (data != 'gagal') {
+					swal("Sukses", "Berhasil Di Update!", "success");
+
+					let fake_ajax = setTimeout(function () {
+						clearInterval(fake_ajax);
+					}, 1500);
+					$("#cart-jumlah").val("");
+					// countData();
+				} else {
+					swal("Gagal", "Gagal Di Update! \n Jumlah pemesanan melebihi stok \n Silakan periksa keranjang belanja anda!", "error");
+					
+					let fake_ajax = setTimeout(function () {
+						clearInterval(fake_ajax);
+						document.location.href = url + 'Keranjang'
+					}, 1500);
+					$("#cart-jumlah").val("");
+					// countData();
+				}
+			},
+			error :function(err){
 				// tampilData();
-				swal("Sukses", "Berhasil Di Update!", "success");
+				swal("Gagal", "Gagal Di Update!", "error");
 				let fake_ajax = setTimeout(function () {
 					clearInterval(fake_ajax);
 					document.location.href = `${url}Keranjang`
@@ -92,4 +120,19 @@ $(document).ready(function () {
 			}
 		});
 	});
+
+	
+
+
+	$('button.checkout').on('click', () => {
+		$.ajax({
+			url: `${url}Keranjang/Checkout`,
+			success : (response) => {
+				console.log(response)
+			},
+			error: (err) => {
+				swal("Gagal", "Jumlah Pembelian Melebihi Stok	!", "error");
+			}	
+		})
+	})
 });

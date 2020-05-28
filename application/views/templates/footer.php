@@ -34,6 +34,7 @@
 <script src="<?= base_url() ?>assets/modules/sweetalert/sweetalert.min.js"></script>
 <!-- <script src="<?= base_url() ?>assets/js/page/modules-sweetalert.js"></script> -->
 <!-- Template JS File -->
+<script src="<?= base_url() ?>assets/js/custom.js"></script>
 <script src="<?= base_url() ?>assets/js/scripts.js"></script>
 </body>
 

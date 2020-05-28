@@ -11,6 +11,12 @@
 						<div class="card-header">
 							<h4 class="d-block">Update Keranjang</h4>
 						</div>
+
+						<?php if ($this->session->flashdata('alert')) : ?>
+							<div class="container">
+								<div class="alert alert-danger"><?= $this->session->flashdata('alert') ?></div>
+							</div>
+						<?php endif; ?>
 						<div class="card-body">
 							<?php if ($this->session->userdata('buyer')) : ?>
 								<div class="row">
@@ -34,12 +40,12 @@
 															<td class="text-center"><?= $no ?></td>
 															<td><?= $brg['name'] ?></td>
 															<td>Rp. <?= number_format($brg['price']) ?></td>
-															<td style="width: 110px">
-																<input type="number" value="<?= $brg['qty'] ?>" id="qty<?= $brg['rowid'] ?>" class="form-control">
+															<td style="width: 140px">
+																<input type="number" min="1" value="<?= $brg['qty'] ?>"  id="qty<?= $brg['rowid'] ?>" class="form-control qty <?= $brg['id'] ?>">
 															</td>
 															<td>Rp. <?= number_format($brg['subtotal']) ?></td>
 															<td>
-																<a id="<?= $brg['rowid'] ?>" href="#" class="btn btn-info btn-sm edit_cart" title="Update"><i class="fas fa-sync-alt"></i></a>
+																<a id="<?= $brg['rowid'] ?>" data-id="<?= $brg['id'] ?>" href="#" class="btn btn-info btn-sm edit_cart" title="Update"><i class="fas fa-sync-alt"></i></a>
 																<a id="<?= $brg['rowid'] ?>" href="#" class="btn btn-danger btn-sm hapus_cart" title="Delete"><i class="fas fa-trash"></i></a>
 															</td>
 														</tr>
@@ -58,7 +64,7 @@
 							<?php endif; ?>
 
 							<div class="container">
-								<button type="submit" class="btn btn-info float-right">Checkout</button>
+								<button type="submit" class="btn btn-info float-right checkout">Checkout</button>
 							</div>
 						</div>
 					</div>

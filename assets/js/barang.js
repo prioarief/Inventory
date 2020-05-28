@@ -211,6 +211,15 @@ $(document).ready(function () {
 		});
 	});
 
+	const countData = () => {
+		$.ajax({
+			url: `${url}Keranjang/CountItems/`,
+			success: function (data) {
+				$("small.total").html(`(${data})`);
+			},
+		});
+	};
+
 	$("#CartForm").validate({
 		rules: {
 			jumlah: {
@@ -244,15 +253,26 @@ $(document).ready(function () {
 				},
 				method: "post",
 				success: function (data) {
-					swal("Sukses", "Berhasil Masuk Keranjang!", "success");
+					if (data != 'gagal') {
+						swal("Sukses", "Berhasil Masuk Keranjang!", "success");
 
-					let fake_ajax = setTimeout(function () {
-						clearInterval(fake_ajax);
-					}, 1500);
-					$("#cart-jumlah").val("");
+						let fake_ajax = setTimeout(function () {
+							clearInterval(fake_ajax);
+						}, 1500);
+						$("#cart-jumlah").val("");
+						countData();
+					} else {
+						swal("Gagal", "Gagal Masuk Keranjang! \n Jumlah pemesanan melebihi stok \n Silakan periksa keranjang belanja anda!", "error");
+
+						let fake_ajax = setTimeout(function () {
+							clearInterval(fake_ajax);
+						}, 1500);
+						$("#cart-jumlah").val("");
+						countData();
+					}
 				},
 				error: function (err) {
-					swal("Gagal", "Data Gagal Di Edit!", "error");
+					swal("Gagal", "Data Gagal Di Masukkan!", "error");
 					let fake_ajax = setTimeout(function () {
 						// $(this).closest(".modal").modal("hide");
 						clearInterval(fake_ajax);
@@ -261,25 +281,4 @@ $(document).ready(function () {
 			});
 		},
 	});
-
-	// Load shopping cart
-	// $.ajax({
-	// 	url: url + "Keranjang/LihatKeranjang/",
-	// 	method: "post",
-	// 	success: function (response) {
-	// 		// console.log(response)
-	// 		const result = JSON.parse(response);
-
-	// 		// console.log(result.c4ca4238a0b923820dcc509a6f75849b)
-	// 		let data = Object.keys(result).map((val, index) => [result[val]]);
-	// 		let hasil = data.forEach(items => {
-	// 			items.forEach(item => {
-	// 				console.log(item.qty)
-	// 			})
-	// 		})
-	// 	},
-	// });
-
-	// Load shopping cart
-	// $("#keranjang").html('Keranjang Belanja (0)');
 });

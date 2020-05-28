@@ -52,13 +52,16 @@
 							<div class="d-sm-none d-lg-inline-block">Hi, <?= $this->session->userdata('nama') ?></div>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
-							<div class="dropdown-title"><?= $this->session->userdata('role') ?></div>
 							<div class="dropdown-divider"></div>
 							<?php if ($this->session->userdata('role')) : ?>
+								<div class="dropdown-title"><?= $this->session->userdata('role') ?></div>
 								<a href="<?= base_url() ?>Admin/Logout" class="dropdown-item has-icon text-danger">
 									<i class="fas fa-sign-out-alt"></i> Logout
 								</a>
 							<?php else : ?>
+								<div class="container">
+									<small class="text-muted">Keranjang Belanja akan di reset ketika logout</small>
+								</div>
 								<a href="<?= base_url() ?>Auth/Logout" class="dropdown-item has-icon text-danger">
 									<i class="fas fa-sign-out-alt"></i> Logout
 								</a>
@@ -93,7 +96,7 @@
 							<li>
 								<a class="nav-link" href="<?= base_url() ?>Keranjang"><i class="fas fa-shopping-cart"></i>
 									<span id="keranjang">Keranjang Belanja
-										<small class="text-danger">(<?= count($this->cart->contents()) ?>)</small>
+										<small class="text-danger total">(<?= count($this->cart->contents()) ?>)</small>
 									</span>
 								</a>
 							</li>

@@ -8,5 +8,19 @@
 "use strict";
 
 $(document).ready(function () {
+	let url = $("input#url").val();
+
 	$("#mytable").DataTable();
+
+
+	const countData = () => {
+		$.ajax({
+			url : `${url}Keranjang/CountItems/`,
+			success :function(data){
+				$('small.total').html(`(${data})`)
+			}
+		});
+	}
+
+	countData()
 });

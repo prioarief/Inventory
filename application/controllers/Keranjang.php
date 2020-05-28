@@ -7,6 +7,7 @@ class Keranjang extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->library('cart');
+		$this->load->model('BarangModel', 'Barang');
 	}
 
 	public function index()
@@ -34,46 +35,75 @@ class Keranjang extends CI_Controller
 		$harga = $this->input->post('harga');
 		$jumlah = $this->input->post('jumlah');
 
-		$data = [
-			'id' => $id,
-			'name' => $barang,
-			'price' => $harga,
-			'qty' => $jumlah,
-		];
+		foreach ($this->cart->contents() as $data) {
+			$req = $this->Barang->getById($id);
 
-		$this->cart->insert($data);
-		echo $this->index();
+			if ($data['id'] == $id) {
+				// echo 'barang sudah ada di keranjang';
+				if ($jumlah + $data['qty'] > $req['stok']) {
+					echo 'gagal';
+					die;
+				} else {
+					break;
+				}
+			}
+			$data = [
+				'id' => $id,
+				'name' => $barang,
+				'price' => $harga,
+				'qty' => $jumlah,
+			];
+
+			$this->cart->insert($data);
+		}
 	}
 
 	public function HapusKeranjang()
 	{
-		// $data = [
-		// 	'rowid' => 'c81e728d9d4c2f636f067f89cc14862c',
-		// 	'qty' => 0
-		// ];
 
 		$id = $this->input->post('id');
 
 		$this->cart->remove($id);
 		redirect('Keranjang');
 	}
-	
+
 	public function EditKeranjang()
 	{
+		$barang = $this->input->post('barang');
 		$id = $this->input->post('id');
 		$qty = $this->input->post('qty');
-		$data = [
-			'rowid' => $id,
-			'qty' => $qty
-		];
 
 
-		$this->cart->update($data);
-		redirect('Keranjang');
+		foreach ($this->cart->contents() as $data) {
+			$req = $this->Barang->getById($barang);
+
+			if ($data['id'] == $barang) {
+
+				// echo $data['name'];
+
+				if ($qty <= $req['stok']) {
+					$data = [
+						'rowid' => $id,
+						'qty' => $qty
+					];
+
+					$this->cart->update($data);
+					redirect('Keranjang');
+				} else {
+					echo 'gagal';
+				}
+			}
+		}
 	}
 
 	public function CountItems()
 	{
-		echo (count($this->cart->contents()));
+		echo count($this->cart->contents());
+	}
+
+	public function Checkout()
+	{
+		$total = $this->cart->total();
+		$data = array();
 	}
 }
