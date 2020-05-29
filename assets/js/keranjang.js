@@ -75,7 +75,12 @@ $(document).ready(function () {
 		$.ajax({
 			url: `${url}Keranjang/Checkout`,
 			success: (response) => {
-				console.log(response);
+				swal("Sukses", "Transaksi Berhasil!", "success");
+				let fake_ajax = setTimeout(function () {
+					clearInterval(fake_ajax);
+					document.location.href = `${url}Transaksi/Invoice/${response}`;
+				}, 2000);
+
 			},
 			error: (err) => {
 				swal("Gagal", "Jumlah Pembelian Melebihi Stok	!", "error");

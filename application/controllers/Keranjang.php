@@ -8,6 +8,11 @@ class Keranjang extends CI_Controller
 		parent::__construct();
 		$this->load->library('cart');
 		$this->load->model('BarangModel', 'Barang');
+		$this->load->model('TransaksiModel', 'Transaksi');
+
+		if(!$this->session->userdata('nama')){
+			redirect('Auth');
+		}
 	}
 
 	public function index()
@@ -112,7 +117,35 @@ class Keranjang extends CI_Controller
 
 	public function Checkout()
 	{
+		date_default_timezone_set('Asia/Jakarta');
 		$total = $this->cart->total();
-		$data = array();
+		$data = [
+			'pelanggan_id' => $this->session->userdata('id'),
+			'total_harga' => $total,
+			'tanggal' => date('Y-m-d H:i:s'),
+			'status' => 0
+		];
+
+
+		$this->db->trans_start();
+		$this->Transaksi->InsertTransaction($data);
+
+		$TransID = $this->db->insert_id();
+
+		$detail = array();
+		foreach ($this->cart->contents() as $items) {
+			$detail = [
+				'penjualan_id' => $TransID,
+				'barang_id' => $items['id'],
+				'jumlah' => $items['qty']
+			];
+
+			$this->db->insert('detail_penjualan', $detail);
+		}
+
+		$this->db->trans_complete();
+
+		$this->cart->destroy();
+		echo $TransID;
 	}
 }

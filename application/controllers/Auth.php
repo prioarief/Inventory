@@ -41,6 +41,7 @@ class Auth extends CI_Controller
 		if ($req) {
 			if (password_verify($password, $req['password'])) {
 				$data = [
+					'id' => $req['id'],
 					'nama' => $req['nama'],
 					'username' => $req['username'],
 					'buyer' => true,
