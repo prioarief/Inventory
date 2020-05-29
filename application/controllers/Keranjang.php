@@ -50,17 +50,18 @@ class Keranjang extends CI_Controller
 					echo 'gagal';
 					die;
 				} else {
+					// $data = [
+					// 	'id' => $id,
+					// 	'name' => $barang,
+					// 	'price' => $harga,
+					// 	'qty' => $jumlah,
+					// ];
+		
+					// $this->cart->insert($data);
 					break;
 				}
 			}
-			$data = [
-				'id' => $id,
-				'name' => $barang,
-				'price' => $harga,
-				'qty' => $jumlah,
-			];
-
-			$this->cart->insert($data);
+			
 		}
 		$data = [
 			'id' => $id,
@@ -146,6 +147,7 @@ class Keranjang extends CI_Controller
 		$this->db->trans_complete();
 
 		$this->cart->destroy();
+		$this->session->set_flashdata('alert', 'Checkout Berhasil');
 		echo $TransID;
 	}
 }

@@ -17,7 +17,8 @@ class Welcome extends CI_Controller
 	public function index()
 	{
 		$data = [
-			'title' => 'Dashboard'
+			'title' => 'Dashboard',
+			'riwayat' => count($this->Transaksi->TransactionHistory($this->session->userdata('id')))
 		];
 		$this->load->view('templates/header', $data);
 		$this->load->view('index');

@@ -26,4 +26,9 @@ class TransaksiModel extends CI_Model
 		$query = $this->db->get()->result_array();
 		return $query;
 	}
+
+	public function TransactionHistory($id)
+	{
+		return $this->db->get_where('penjualan', ['pelanggan_id' => $id])->result_array();
+	}
 }

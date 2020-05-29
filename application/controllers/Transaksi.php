@@ -30,7 +30,21 @@ class Transaksi extends CI_Controller
 			'item' => $this->Transaksi->detailTransaction($id),
 		];
 		$this->load->view('templates/header', $data);
-		$this->load->view('invoice/index', $data);
+		$this->load->view('transaksi/invoice', $data);
+		$this->load->view('templates/footer');
+	}
+
+	public function RiwayatTransaksi($id = null)
+	{
+		if (is_null($id) || $id != $this->session->userdata('id')) {
+			redirect('Barang');
+		}
+		$data = [
+			'title' => 'Riwayat Transaksi',
+			'transaksi' => $this->Transaksi->TransactionHistory($id),
+		];
+		$this->load->view('templates/header', $data);
+		$this->load->view('transaksi/riwayat', $data);
 		$this->load->view('templates/footer');
 	}
 }
