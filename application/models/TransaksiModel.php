@@ -2,6 +2,23 @@
 
 class TransaksiModel extends CI_Model
 {
+	public function getPendingTransaksi()
+	{
+		return $this->db->get_where('penjualan', ['status' => 0])->result_array();
+	}
+	
+	public function getSuccessTransaksi()
+	{
+		return $this->db->get_where('penjualan', ['status' => 1])->result_array();
+	}
+	
+	// public function TransaksiGagal($id)
+	// {
+	// 	$this->db->where('id', $id);
+	// 	$this->db->delete('penjualan');
+	// }
+
+
 	public function InsertTransaction($data)
 	{
 		$this->db->insert('penjualan', $data);
@@ -30,5 +47,11 @@ class TransaksiModel extends CI_Model
 	public function TransactionHistory($id)
 	{
 		return $this->db->get_where('penjualan', ['pelanggan_id' => $id])->result_array();
+	}
+	
+	public function Konfirmasi($id, $data)
+	{
+		$this->db->where('id', $id);
+		$this->db->update('penjualan', $data);
 	}
 }

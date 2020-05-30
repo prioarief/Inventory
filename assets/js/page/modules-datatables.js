@@ -33,6 +33,13 @@ $("#table-1").dataTable({
     { "sortable": true, "targets": [2,3] }
   ]
 });
+
+$("#table-pelanggan").dataTable({
+  "columnDefs": [
+    { "sortable": true, "targets": [1,2] }
+  ]
+});
+
 $("#table-2").dataTable({
   "columnDefs": [
     { "sortable": false, "targets": [0,2,3] }

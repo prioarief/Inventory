@@ -80,62 +80,10 @@ $(document).ready(function () {
 					clearInterval(fake_ajax);
 					document.location.href = `${url}Transaksi/Invoice/${response}`;
 				}, 2000);
-
 			},
 			error: (err) => {
 				swal("Gagal", "Jumlah Pembelian Melebihi Stok	!", "error");
 			},
 		});
 	});
-
-	// const tampilData = () => {
-	// 	const dataKeranjang = [];
-	// 	$.ajax({
-	// 		url: url + "Keranjang/LihatKeranjang/",
-	// 		method: "post",
-	// 		success: function (response) {
-	// 			const result = JSON.parse(response);
-
-	// 			let data = Object.keys(result).map((val, index) => [result[val]]);
-	// 			data.forEach((items) => {
-	// 				items.forEach((item) => {
-	// 					dataKeranjang.push(item.name);
-	// 				});
-	// 			});
-	// 		},
-	// 	});
-
-	// 	return dataKeranjang;
-	// };
-
-	// const tampilStok = () => {
-	// 	$.ajax({
-	// 		url: url + "Keranjang/LihatKeranjang/",
-	// 		method: "post",
-	// 		success: function (response) {
-	// 			const result = JSON.parse(response);
-
-	// 			let data = Object.keys(result).map((val, index) => [result[val]]);
-	// 			data.forEach((items) => {
-	// 				items.forEach((item) => {
-	// 					$.ajax({
-	// 						url: `${url}Barang/Detail/${item.id}`,
-	// 						success: (response) => {
-	// 							const result = JSON.parse(response);
-	// 							if ($("input.qty").attr("data-id") == result.id) {
-	// 								$("small.stok").html(`max ${result.stok}`);
-	// 							}
-	// 						},
-	// 						error: (err) => {
-	// 							console.log(err);
-	// 						},
-	// 					});
-	// 				});
-	// 			});
-	// 		},
-	// 	});
-	// };
-
-	// tampilStok();
-	// tampilData()
 });

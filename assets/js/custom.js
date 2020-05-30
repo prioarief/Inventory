@@ -23,4 +23,33 @@ $(document).ready(function () {
 	}
 
 	countData()
+
+	$('button.konfirmasi').on('click', () => {
+		let id = $('button.konfirmasi').data('id')
+		$.ajax({
+			url : `${url}Transaksi/Konfirmasi/${id}`,
+			success :function(data){
+				swal("Sukses", "Konfrimasi Berhasil!", "success");
+				let fake_ajax = setTimeout(function () {
+					clearInterval(fake_ajax);
+					document.location.href = `${url}Transaksi/Penjualan`;
+				}, 2000);
+			}
+		});
+	})
+	
+	
+	$('button.batal').on('click', () => {
+		let id = $('button.batal').data('id')
+		$.ajax({
+			url : `${url}Transaksi/TransaksiGagal/${id}`,
+			success :function(data){
+				swal("Sukses", "Transaksi Berhasil Di Batalkan!", "success");
+				let fake_ajax = setTimeout(function () {
+					clearInterval(fake_ajax);
+					document.location.href = `${url}Transaksi/Penjualan`;
+				}, 2000);
+			}
+		});
+	})
 });

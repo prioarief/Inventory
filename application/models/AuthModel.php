@@ -19,6 +19,12 @@ class AuthModel extends CI_Model
 	{
 		return $this->db->get_where('pelanggan', ['username' => $user ])->row_array();
 	}
+
+	public function get()
+	{
+		return $this->db->get('pelanggan')->result_array();
+	}
+
 }
                         
 /* End of file AuthModel.php */

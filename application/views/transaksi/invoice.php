@@ -12,7 +12,7 @@
 							<?php if ($this->session->flashdata('alert')) : ?>
 								<div class="alert alert-success alert-sm">Checkout Berhasil!</div>
 							<?php endif; ?>
-							<hr>
+							<h3>Invoice Transaksi</h3>
 							<div class="row">
 								<div class="col-md">
 									<address>
@@ -23,6 +23,8 @@
 										<strong>Status Pembelian :</strong>
 										<?php if ($customer['status'] == 0) {
 											echo '<mark>Pending (Menunggu konfirmasi Admin)</mark>' . '<br>';
+										} elseif ($customer['status'] == 2) {
+											echo 'Transaksi Di Batalkan' . '<br>';
 										} else {
 											echo 'Sukses' . '<br>';
 										} ?>
@@ -69,7 +71,15 @@
 				</div>
 				<hr>
 				<div class="text-md-right">
-					<button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+					<?php if ($this->session->userdata('role')) : ?>
+						<?php if ($customer['status'] == 0) : ?>
+							<button class="btn btn-success konfirmasi" data-id="<?= $customer['id'] ?>">Konfirmasi <i class="fas fa-check-circle"></i></button>
+							<button class="btn btn-danger batal" data-id="<?= $customer['id'] ?>">Batal <i class="fas fa-times-circle"></i></button>
+						<?php endif; ?>
+					<?php endif; ?>
+					<?php if ($customer['status'] = !2) : ?>
+						<button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>

@@ -8,6 +8,7 @@ class Transaksi extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('TransaksiModel', 'Transaksi');
+		$this->load->model('BarangModel', 'Barang');
 
 		if (!$this->session->userdata('nama')) {
 			redirect('Auth');
@@ -16,8 +17,20 @@ class Transaksi extends CI_Controller
 
 	public function index()
 	{
-		redirect('Transaksi/Invoice');
+		redirect('Welcome');
 	}
+
+	public function Penjualan()
+	{
+		$data = [
+			'title' => 'Transaksi',
+			'transaksi' => $this->Transaksi->getSuccessTransaksi(),
+		];
+		$this->load->view('templates/header', $data);
+		$this->load->view('transaksi/transaksi', $data);
+		$this->load->view('templates/footer');
+	}
+
 
 	public function Invoice($id = null)
 	{
@@ -46,5 +59,69 @@ class Transaksi extends CI_Controller
 		$this->load->view('templates/header', $data);
 		$this->load->view('transaksi/riwayat', $data);
 		$this->load->view('templates/footer');
+	}
+
+	public function TransaksiTertunda()
+	{
+		$data = [
+			'title' => 'Riwayat Transaksi',
+			'transaksi' => $this->Transaksi->getPendingTransaksi(),
+		];
+		$this->load->view('templates/header', $data);
+		$this->load->view('transaksi/pending', $data);
+		$this->load->view('templates/footer');
+	}
+
+	public function Konfirmasi($id = null)
+	{
+		if (is_null($id)) {
+			die;
+			redirect('Welcome');
+		}
+
+		$req = $this->Transaksi->getCustomer($id);
+		if ($req) {
+			$data = [
+				'status' => 1
+			];
+
+			$this->Transaksi->Konfirmasi($id, $data);
+
+			$barang = $this->Transaksi->detailTransaction($id);
+			foreach ($barang as $item) {
+				$request = $this->Barang->getById($item['barang_id']);
+				if($request['id'] == $item['barang_id']){
+					$data = [
+						'stok' => $request['stok'] - $item['jumlah']
+					];
+
+					$this->Barang->EditBarang($item['barang_id'], $data);
+				}
+			}
+			redirect('Transaksi/Penjualan');
+		} else {
+			die;
+			redirect('Welcome');
+		}
+	}
+	
+	public function TransaksiGagal($id = null)
+	{
+		if (is_null($id)) {
+			die;
+			redirect('Welcome');
+		}
+
+		$req = $this->Transaksi->getCustomer($id);
+		if ($req) {
+			$data = [
+				'status' => 2
+			];
+
+			$this->Transaksi->Konfirmasi($id, $data);
+		} else {
+			die;
+			redirect('Welcome');
+		}
 	}
 }

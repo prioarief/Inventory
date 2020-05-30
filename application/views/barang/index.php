@@ -77,7 +77,12 @@
 																	<a data-id="<?= $brg['id'] ?>" href="#" class="btn btn-info btn-sm" title="Edit" data-toggle="modal" data-target="#EditBarang"><i class="fas fa-pencil-alt"></i></a>
 																	<a data-id="<?= $brg['id'] ?>" data-toggle="modal" data-target="#HapusBarang" href="<?= $brg['id'] ?>" id="btnDelete" class="btn btn-danger btn-sm btnDelete" title="Delete"><i class="fas fa-trash"></i></a>
 																<?php else : ?>
-																	<a data-id="<?= $brg['id'] ?>"  data-toggle="modal" data-target="#Cart" href="<?= $brg['id'] ?>" id="" class="btn btn-success btn-sm " title="Beli"><i class="fas fa-shopping-cart"></i></a>
+																	<?php if ($brg['stok'] > 0) : ?>
+																		<a data-id="<?= $brg['id'] ?>" data-toggle="modal" data-target="#Cart" href="<?= $brg['id'] ?>" id="" class="btn btn-success btn-sm " title="Beli"><i class="fas fa-shopping-cart"></i></a>
+																	<?php else : ?>
+																		<button disabled data-id="<?= $brg['id'] ?>" data-toggle="modal" data-target="#Cart" href="<?= $brg['id'] ?>" id="" class="btn btn-danger btn-sm" title="Habis"><i class="fas fa-shopping-cart"></i></button>
+																	<?php endif; ?>
+
 																<?php endif; ?>
 															</td>
 														</tr>
