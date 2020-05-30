@@ -12,7 +12,11 @@ $(document).ready(function () {
 	$("#AddBarangForm").validate({
 		rules: {
 			barang: "required",
-			harga: {
+			harga_beli: {
+				required: true,
+				number: true,
+			},
+			harga_jual: {
 				required: true,
 				number: true,
 			},
@@ -24,8 +28,12 @@ $(document).ready(function () {
 
 		messages: {
 			barang: "Masukkan Nama Barang",
-			harga: {
-				required: "Masukkan Harga Barang",
+			harga_beli: {
+				required: "Masukkan Harga Beli Barang",
+				number: "Masukkan Angka!!",
+			},
+			harga_jual: {
+				required: "Masukkan Harga Jual Barang",
 				number: "Masukkan Angka!!",
 			},
 			stok: {
@@ -35,8 +43,9 @@ $(document).ready(function () {
 		},
 
 		submitHandler: function (form) {
+			let harga_beli = $("#harga_beli").val();
+			let harga_jual = $("#harga_jual").val();
 			let barang = $("#barang").val();
-			let harga = $("#harga").val();
 			let stok = $("#stok").val();
 
 			// $(this).closest(".modal").modal("hide");
@@ -46,7 +55,8 @@ $(document).ready(function () {
 				url: url + "Barang/AddBarang/",
 				data: {
 					barang: barang,
-					harga: harga,
+					harga_beli: harga_beli,
+					harga_jual: harga_jual,
 					stok: stok,
 				},
 				method: "post",
@@ -84,7 +94,8 @@ $(document).ready(function () {
 				const result = JSON.parse(response);
 
 				$("input#edit-barang").val(result.nama_barang);
-				$("input#edit-harga").val(result.harga);
+				$("input#edit-harga-beli").val(result.harga_beli);
+				$("input#edit-harga-jual").val(result.harga_jual);
 				$("input#edit-stok").val(result.stok);
 				$("input#edit-id").val(result.id);
 			},
@@ -94,7 +105,11 @@ $(document).ready(function () {
 	$("#EditBarangForm").validate({
 		rules: {
 			barang: "required",
-			harga: {
+			harga_beli: {
+				required: true,
+				number: true,
+			},
+			harga_jual: {
 				required: true,
 				number: true,
 			},
@@ -106,8 +121,12 @@ $(document).ready(function () {
 
 		messages: {
 			barang: "Masukkan Nama Barang",
-			harga: {
-				required: "Masukkan Harga Barang",
+			harga_beli: {
+				required: "Masukkan Harga Beli Barang",
+				number: "Masukkan Angka!!",
+			},
+			harga_jual: {
+				required: "Masukkan Harga Jual Barang",
 				number: "Masukkan Angka!!",
 			},
 			stok: {
@@ -118,7 +137,8 @@ $(document).ready(function () {
 
 		submitHandler: function (form) {
 			let barang = $("#edit-barang").val();
-			let harga = $("#edit-harga").val();
+			let harga_beli = $("#edit-harga-beli").val();
+			let harga_jual = $("#edit-harga-jual").val();
 			let stok = $("#edit-stok").val();
 			let id = $("#edit-id").val();
 
@@ -127,7 +147,8 @@ $(document).ready(function () {
 				url: url + "Barang/EditBarang/",
 				data: {
 					barang: barang,
-					harga: harga,
+					harga_beli: harga_beli,
+					harga_jual: harga_jual,
 					stok: stok,
 					id: id,
 				},
@@ -200,7 +221,8 @@ $(document).ready(function () {
 				const result = JSON.parse(response);
 
 				$("input#cart-barang").val(result.nama_barang);
-				$("input#cart-harga").val(result.harga);
+				$("input#cart-harga").val(result.harga_jual);
+				$("input#cart-harga-beli").val(result.harga_beli);
 				$("input#cart-stok").val(result.stok);
 				$("input#cart-jumlah").attr({
 					max: result.stok,
@@ -260,6 +282,69 @@ $(document).ready(function () {
 							clearInterval(fake_ajax);
 						}, 1500);
 						$("#cart-jumlah").val("");
+						countData();
+					} else {
+						swal("Gagal", "Gagal Masuk Keranjang! \n Jumlah pemesanan melebihi stok \n Silakan periksa keranjang belanja anda!", "error");
+
+						let fake_ajax = setTimeout(function () {
+							clearInterval(fake_ajax);
+						}, 1500);
+						$("#cart-jumlah").val("");
+						countData();
+					}
+				},
+				error: function (err) {
+					swal("Gagal", "Data Gagal Di Masukkan!", "error");
+					let fake_ajax = setTimeout(function () {
+						// $(this).closest(".modal").modal("hide");
+						clearInterval(fake_ajax);
+					}, 1000);
+				},
+			});
+		},
+	});
+
+
+	$("#StokForm").validate({
+		rules: {
+			jumlahh: {
+				required: true,
+				number: true,
+			},
+		},
+
+		messages: {
+			jumlahh: {
+				required: "Masukkan jumlah pembelian",
+				number: "Masukkan Angka!!",
+			},
+		},
+
+		submitHandler: function (form) {
+			let barang = $("#cart-barang").val();
+			let harga = $("#cart-harga-beli").val();
+			let jumlah = $("#cart-jumlahh").val();
+			let id = $("#barang-id").val();
+			$("#Cart").modal("toggle");
+
+			// DO AJAX HERE
+			$.ajax({
+				url: url + "Keranjang/TambahStok/",
+				data: {
+					id: id,
+					barang: barang,
+					harga: harga,
+					jumlah: jumlah,
+				},
+				method: "post",
+				success: function (data) {
+					if (data != 'gagal') {
+						swal("Sukses", "Berhasil Masuk Keranjang!", "success");
+
+						let fake_ajax = setTimeout(function () {
+							clearInterval(fake_ajax);
+						}, 1500);
+						$("#cart-jumlahh").val("");
 						countData();
 					} else {
 						swal("Gagal", "Gagal Masuk Keranjang! \n Jumlah pemesanan melebihi stok \n Silakan periksa keranjang belanja anda!", "error");

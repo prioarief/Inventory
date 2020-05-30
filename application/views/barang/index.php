@@ -23,7 +23,8 @@
 											<tr>
 												<th class="text-center">#</th>
 												<th>Nama Barang</th>
-												<th>Harga</th>
+												<th>Harga Beli</th>
+												<th>Harga Jual</th>
 												<th>Stok</th>
 												<th>Action</th>
 											</tr>
@@ -34,12 +35,14 @@
 												<tr>
 													<td class="text-center"><?= $no ?></td>
 													<td><?= $brg['nama_barang'] ?></td>
-													<td>Rp. <?= number_format($brg['harga']) ?></td>
+													<td>Rp. <?= number_format($brg['harga_beli']) ?></td>
+													<td>Rp. <?= number_format($brg['harga_jual']) ?></td>
 													<td><?= $brg['stok'] ?></td>
 													<td>
 														<?php if ($this->session->userdata('role')) : ?>
 															<a data-id="<?= $brg['id'] ?>" href="#" class="btn btn-info btn-sm" title="Edit" data-toggle="modal" data-target="#EditBarang"><i class="fas fa-pencil-alt"></i></a>
 															<a data-id="<?= $brg['id'] ?>" data-toggle="modal" data-target="#HapusBarang" href="<?= $brg['id'] ?>" id="btnDelete" class="btn btn-danger btn-sm btnDelete" title="Delete"><i class="fas fa-trash"></i></a>
+															<a data-id="<?= $brg['id'] ?>" data-toggle="modal" data-target="#Cart" href="<?= $brg['id'] ?>" id="" class="btn btn-success btn-sm " title="Tambah Stok"><i class="fas fa-cart-plus"></i></a>
 														<?php endif; ?>
 													</td>
 												</tr>
@@ -70,7 +73,7 @@
 														<tr>
 															<td class="text-center"><?= $no ?></td>
 															<td><?= $brg['nama_barang'] ?></td>
-															<td>Rp. <?= number_format($brg['harga']) ?></td>
+															<td>Rp. <?= number_format($brg['harga_jual']) ?></td>
 															<td><?= $brg['stok'] ?></td>
 															<td>
 																<?php if ($this->session->userdata('role')) : ?>
@@ -92,25 +95,6 @@
 											</table>
 										</div>
 									</div>
-
-									<!-- <div class="col-md-6">
-										<h4>Keranjang</h4>
-										<table class="table table-responsive">
-											<thead>
-												<tr>
-													<th>Produk</th>
-													<th>Harga</th>
-													<th>Qty</th>
-													<th>Subtotal</th>
-													<th>Aksi</th>
-												</tr>
-											</thead>
-											<tbody id="detail_cart">
-											
-											</tbody>
-
-										</table>
-									</div> -->
 								</div>
 							<?php endif; ?>
 						</div>
@@ -145,14 +129,25 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label>Harga</label>
+							<label>Harga Beli</label>
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<div class="input-group-text">
 										Rp
 									</div>
 								</div>
-								<input type="number" min="1" class="form-control" placeholder="Harga" id="harga" name="harga">
+								<input type="number" min="1" class="form-control" placeholder="Harga beli" id="harga_beli" name="harga_beli">
+							</div>
+						</div>
+						<div class="form-group">
+							<label>Harga Jual</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										Rp
+									</div>
+								</div>
+								<input type="number" min="1" class="form-control" placeholder="Harga jual" id="harga_jual" name="harga_jual">
 							</div>
 						</div>
 						<div class="form-group">
@@ -203,14 +198,25 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label>Harga</label>
+							<label>Harga Beli</label>
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<div class="input-group-text">
 										Rp
 									</div>
 								</div>
-								<input type="number" min="1" class="form-control" placeholder="Harga" id="edit-harga" name="harga">
+								<input type="number" min="1" class="form-control" placeholder="Harga" id="edit-harga-beli" name="harga_beli">
+							</div>
+						</div>
+						<div class="form-group">
+							<label>Harga Jual</label>
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<div class="input-group-text">
+										Rp
+									</div>
+								</div>
+								<input type="number" min="1" class="form-control" placeholder="Harga" id="edit-harga-jual" name="harga_jual">
 							</div>
 						</div>
 						<div class="form-group">
@@ -235,19 +241,22 @@
 	</div>
 	<!-- End Modal -->
 
-	<?php if ($this->session->userdata('buyer')) : ?>
-		<!-- Modal Beli -->
-		<div class="modal fade Cart" id="Cart" tabindex="-1" role="dialog" aria-labelledby="Cart" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="staticBackdropLabel">Beli Barang</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
+	<!-- Modal Beli -->
+	<div class="modal fade Cart" id="Cart" tabindex="-1" role="dialog" aria-labelledby="Cart" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Beli Barang</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<?php if ($this->session->userdata('buyer')) : ?>
 						<form method="post" id="CartForm">
+						<?php else : ?>
+							<form method="post" id="StokForm">
+							<?php endif; ?>
 							<input type="hidden" name="id" id="barang-id">
 							<div class="form-group">
 								<label>Nama Barang</label>
@@ -258,7 +267,6 @@
 										</div>
 									</div>
 									<input type="text" class="form-control" placeholder="Barang" readonly id="cart-barang" name="barang">
-
 								</div>
 							</div>
 							<div class="form-group">
@@ -269,7 +277,12 @@
 											Rp
 										</div>
 									</div>
-									<input type="number" min="1" class="form-control" placeholder="Harga" readonly id="cart-harga" name="harga">
+									
+									<?php if ($this->session->userdata('buyer')) : ?>
+										<input type="number" min="1" class="form-control" placeholder="Harga" readonly id="cart-harga" name="harga">
+									<?php else : ?>
+										<input type="number" min="1" class="form-control" placeholder="Harga" readonly id="cart-harga-beli" name="harga_beli">
+									<?php endif; ?>
 								</div>
 							</div>
 							<div class="form-group">
@@ -292,20 +305,23 @@
 											<i class="fas fa-shopping-bag"></i>
 										</div>
 									</div>
-									<input type="number" min="1" class="form-control" placeholder="Jumlah Pembelian" id="cart-jumlah" name="jumlah">
+									<?php if ($this->session->userdata('buyer')) : ?>
+										<input type="number" min="1" class="form-control" placeholder="Jumlah Pembelian" id="cart-jumlah" name="jumlah">
+									<?php else : ?>
+										<input type="number" min="1" class="form-control" placeholder="Jumlah Pembelian" id="cart-jumlahh" name="jumlahh">
+									<?php endif; ?>
 								</div>
 							</div>
 
 							<div class="form-group">
 								<button class="btn btn-primary float-right">Tambah Ke Keranjang</button>
 							</div>
-						</form>
-					</div>
+							</form>
 				</div>
 			</div>
 		</div>
-		<!-- End Modal -->
-	<?php endif; ?>
+	</div>
+	<!-- End Modal -->
 
 	<!-- Modal Delete -->
 	<div class="modal fade DeleteBarang" id="HapusBarang" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

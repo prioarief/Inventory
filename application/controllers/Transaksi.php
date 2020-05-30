@@ -30,6 +30,17 @@ class Transaksi extends CI_Controller
 		$this->load->view('transaksi/transaksi', $data);
 		$this->load->view('templates/footer');
 	}
+	
+	public function Pembelian()
+	{
+		$data = [
+			'title' => 'Transaksi',
+			'transaksi' => $this->Transaksi->getAllPembelian(),
+		];
+		$this->load->view('templates/header', $data);
+		$this->load->view('transaksi/pembelian', $data);
+		$this->load->view('templates/footer');
+	}
 
 
 	public function Invoice($id = null)
@@ -44,6 +55,21 @@ class Transaksi extends CI_Controller
 		];
 		$this->load->view('templates/header', $data);
 		$this->load->view('transaksi/invoice', $data);
+		$this->load->view('templates/footer');
+	}
+	
+	public function InvoicePembelian($id = null)
+	{
+		if (is_null($id)) {
+			redirect('Barang');
+		}
+		$data = [
+			'title' => 'Invoice',
+			'supplier' => $this->Transaksi->getPembelian($id),
+			'item' => $this->Transaksi->detailPembelian($id),
+		];
+		$this->load->view('templates/header', $data);
+		$this->load->view('transaksi/invoicePembelian', $data);
 		$this->load->view('templates/footer');
 	}
 

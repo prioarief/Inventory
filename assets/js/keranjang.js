@@ -86,4 +86,55 @@ $(document).ready(function () {
 			},
 		});
 	});
+
+	// $("button.checkoutBeli").on("click", () => {
+	// 	let supplier = $("input#supplier").val();
+	// 	$.ajax({
+	// 		url: `${url}Keranjang/InsertPembelian`,
+	// 		data: {
+	// 			supplier : supplier
+	// 		},
+	// 		success: (response) => {
+	// 			swal("Sukses", "Pembelian Berhasil!", "success");
+	// 			let fake_ajax = setTimeout(function () {
+	// 				clearInterval(fake_ajax);
+	// 				document.location.href = `${url}Transaksi/InvoicePembelian/${response}`;
+	// 			}, 2000);
+	// 		},
+	// 		error: (err) => {
+	// 			console.log(err)
+	// 		}
+	// 	});
+	// });
+
+	// $("#pembelianForm").validate({
+	// 	rules: {
+	// 		supplier: {
+	// 			required: true,
+	// 		},
+	// 	},
+
+	// 	messages: {
+	// 		supplier: {
+	// 			required: "Masukkan nama supplier",
+	// 		},
+	// 	},
+
+	// 	submitHandler: function (form) {
+	// 		let supplier = $("input#supplier").val();
+	// 		$.ajax({
+	// 			url: `${url}Keranjang/InsertPembelian`,
+	// 			data: {
+	// 				supplier : supplier
+	// 			},
+	// 			success: (response) => {
+	// 				swal("Sukses", "Pembelian Berhasil!", "success");
+	// 				let fake_ajax = setTimeout(function () {
+	// 					clearInterval(fake_ajax);
+	// 					document.location.href = `${url}Transaksi/InvoicePembelian/${response}`;
+	// 				}, 2000);
+	// 			},
+	// 		});
+	// 	},
+	// });
 });

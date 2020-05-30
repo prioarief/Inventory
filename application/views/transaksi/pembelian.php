@@ -1,7 +1,7 @@
 <div class="main-content">
 	<section class="section">
 		<div class="section-header">
-			<h1>Riwayat Transaksi </h1>
+			<h1>Riwayat Pembelian </h1>
 		</div>
 
 		<div class="section-body">
@@ -9,7 +9,7 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header">
-							<h4 class="d-block">Riwayat Transaksi</h4>
+							<h4 class="d-block">Riwayat Pembelian</h4>
 						</div>
 						<div class="card-body">
 							<div class="row">
@@ -20,7 +20,7 @@
 												<tr>
 													<th>Tanggal Transaksi</th>
 													<th>Total Harga</th>
-													<th>Status</th>
+													<th>Supplier</th>
 													<th>Action</th>
 												</tr>
 											</thead>
@@ -28,16 +28,10 @@
 												<?php foreach ($transaksi as $tr) : ?>
 													<tr>
 														<td><?= date('d-m-Y H:i:s', strtotime($tr['tanggal'])) ?></td>
-														<td>Rp. <?= number_format($tr['total_harga']) ?></td>
-														<?php if ($tr['status'] == 0) : ?>
-															<td>Pending</td>
-														<?php elseif ($tr['status'] == 1) : ?>
-															<td>Sukses</td>
-														<?php else : ?>
-															<td>Di Batalkan</td>
-														<?php endif; ?>
+														<td>Rp. <?= $tr['nama_supplier'] ?></td>
+														<td>Sukses </td>
 														<td>
-															<a href="<?= base_url('Transaksi/Invoice/' . $tr['id']) ?>" class="badge badge-info badge-sm" title="Detail">Detail</a>
+															<a href="<?= base_url('Transaksi/InvoicePembelian/' . $tr['id']) ?>" class="badge badge-info badge-sm" title="Detail">Detail</a>
 														</td>
 													</tr>
 												<?php endforeach; ?>

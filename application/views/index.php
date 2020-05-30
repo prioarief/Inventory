@@ -77,11 +77,11 @@
 							</a>
 						</div>
 						<div class="col-md-4">
-							<a href="<?= base_url() ?>Keranjang" class="text-dark" style="text-decoration: none">
+							<a href="<?= base_url() ?>Transaksi/Pembelian" class="text-dark" style="text-decoration: none">
 								<div class="card shadow-md" style="border-bottom: solid 7px black; ">
 									<div class="container py-4">
 										<i class="fas fa-cart-plus" style="font-size: 2.5rem"></i>
-										<h6 class="my-2">Pembelian <small class="text-danger" style="font-size: 17px">(<?= count($this->cart->contents()) ?>)</small></h6>
+										<h6 class="my-2">Pembelian <small class="text-danger" style="font-size: 17px">(<?= $pembelian ?>)</small></h6>
 									</div>
 								</div>
 							</a>

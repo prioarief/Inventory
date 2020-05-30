@@ -84,14 +84,21 @@
 							<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
 							<li><a class="nav-link" href="<?= base_url() ?>Barang"><i class="fas fa-box-open"></i> <span>Data Barang</span></a></li>
 							<li><a class="nav-link" href="<?= base_url() ?>Transaksi/Penjualan"><i class="fas fa-cart-arrow-down"></i> <span>Data Penjualan</span></a></li>
-							<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-cart-plus"></i> <span>Data Pembelian</span></a></li>
+							<li><a class="nav-link" href="<?= base_url() ?>Transaksi/Pembelian"><i class="fas fa-cart-plus"></i> <span>Data Pembelian</span></a></li>
 							<li><a class="nav-link" href="<?= base_url() ?>Welcome/Pelanggan"><i class="fas fa-users"></i> <span>Data Pelanggan</span></a></li>
 							<?php if ($this->session->userdata('role') == 'Super Admin') : ?>
 								<li><a class="nav-link" href="<?= base_url() ?>Admin"><i class="fas fa-users-cog"></i> <span>Data Admin</span></a></li>
 							<?php endif; ?>
+							<li>
+								<a class="nav-link" href="<?= base_url() ?>Keranjang/Pembelian"><i class="fas fa-shopping-cart"></i>
+									<span id="keranjang">Keranjang Pembelian
+										<small class="text-danger total">(<?= count($this->cart->contents()) ?>)</small>
+									</span>
+								</a>
+							</li>
 						<?php elseif ($this->session->userdata('buyer')) : ?>
 							<li><a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
-							<li><a class="nav-link" href="<?= base_url('Transaksi/RiwayatTransaksi/'. $this->session->userdata('id')) ?>"><i class="fas fa-chart-area"></i> <span>Riwayat Transaksi</span></a></li>
+							<li><a class="nav-link" href="<?= base_url('Transaksi/RiwayatTransaksi/' . $this->session->userdata('id')) ?>"><i class="fas fa-chart-area"></i> <span>Riwayat Transaksi</span></a></li>
 							<li><a class="nav-link" href="<?= base_url() ?>Barang"><i class="fas fa-box-open"></i> <span>Beli Barang</span></a></li>
 							<li>
 								<a class="nav-link" href="<?= base_url() ?>Keranjang"><i class="fas fa-shopping-cart"></i>

@@ -23,6 +23,11 @@ class TransaksiModel extends CI_Model
 	{
 		$this->db->insert('penjualan', $data);
 	}
+	
+	public function InsertPembelian($data)
+	{
+		$this->db->insert('pembelian', $data);
+	}
 
 	public function getCustomer($id)
 	{
@@ -31,6 +36,26 @@ class TransaksiModel extends CI_Model
 		$this->db->join('pelanggan', 'pelanggan.id = penjualan.pelanggan_id');
 		$this->db->where('penjualan.id', $id);
 		$query = $this->db->get()->row_array();
+		return $query;
+	}
+	
+	public function getAllPembelian()
+	{
+		return $this->db->get_where('pembelian')->result_array();
+	}
+
+	public function getPembelian($id)
+	{
+		return $this->db->get_where('pembelian', ['id' => $id])->row_array();
+	}
+
+	public function detailPembelian($id)
+	{
+		$this->db->select('detail_pembelian.*, barang.*');
+		$this->db->from('detail_pembelian');
+		$this->db->join('barang', 'barang.id = detail_pembelian.barang_id');
+		$this->db->where('detail_pembelian.pembelian_id', $id);
+		$query = $this->db->get()->result_array();
 		return $query;
 	}
 

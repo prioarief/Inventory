@@ -18,7 +18,6 @@ class Barang extends CI_Controller
 		$data = [
 			'title' => 'Data Barang',
 			'barang' => $this->Barang->get(),
-			'stok($id)' => $this->Barang->getById($id = null),
 			'js' => 'barang.js'
 		];
 
@@ -31,16 +30,14 @@ class Barang extends CI_Controller
 	{
 		$this->access();
 		$barang = $this->input->post('barang');
-		$harga = $this->input->post('harga');
+		$harga_beli = $this->input->post('harga_beli');
+		$harga_jual = $this->input->post('harga_jual');
 		$stok = $this->input->post('stok');
-
-		// if(empty($barang) || empty(int($barang) || empty(int($stok)))){
-		// 	return false;
-		// }
 
 		$data = [
 			'nama_barang' => $barang,
-			'harga' => $harga,
+			'harga_beli' => $harga_beli,
+			'harga_jual' => $harga_jual,
 			'stok' => $stok,
 		];
 
@@ -51,13 +48,15 @@ class Barang extends CI_Controller
 	{
 		$this->access();
 		$barang = $this->input->post('barang');
-		$harga = $this->input->post('harga');
+		$harga_beli = $this->input->post('harga_beli');
+		$harga_jual = $this->input->post('harga_jual');
 		$stok = $this->input->post('stok');
 		$id = $this->input->post('id');
 
 		$data = [
 			'nama_barang' => $barang,
-			'harga' => $harga,
+			'harga_beli' => $harga_beli,
+			'harga_jual' => $harga_jual,
 			'stok' => $stok,
 		];
 

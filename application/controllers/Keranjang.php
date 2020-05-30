@@ -10,12 +10,26 @@ class Keranjang extends CI_Controller
 		$this->load->model('BarangModel', 'Barang');
 		$this->load->model('TransaksiModel', 'Transaksi');
 
-		if(!$this->session->userdata('nama')){
+		if (!$this->session->userdata('nama')) {
 			redirect('Auth');
 		}
 	}
 
 	public function index()
+	{
+		$data = [
+			'title' => 'Keranjang Belanja',
+			'barang' => $this->cart->contents(),
+			'data_barang' => $this->Barang->get(),
+			'js' => 'keranjang.js'
+		];
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('keranjang/index');
+		$this->load->view('templates/footer', $data);
+	}
+
+	public function Pembelian()
 	{
 		$data = [
 			'title' => 'Keranjang Belanja',
@@ -56,13 +70,29 @@ class Keranjang extends CI_Controller
 					// 	'price' => $harga,
 					// 	'qty' => $jumlah,
 					// ];
-		
+
 					// $this->cart->insert($data);
 					break;
 				}
 			}
-			
 		}
+		$data = [
+			'id' => $id,
+			'name' => $barang,
+			'price' => $harga,
+			'qty' => $jumlah,
+		];
+
+		$this->cart->insert($data);
+	}
+
+	public function TambahStok()
+	{
+		$id = $this->input->post('id');
+		$barang = $this->input->post('barang');
+		$harga = $this->input->post('harga');
+		$jumlah = $this->input->post('jumlah');
+
 		$data = [
 			'id' => $id,
 			'name' => $barang,
@@ -89,23 +119,32 @@ class Keranjang extends CI_Controller
 		$qty = $this->input->post('qty');
 
 
-		foreach ($this->cart->contents() as $data) {
-			$req = $this->Barang->getById($barang);
+		if ($this->session->userdata('role')) {
+			$data = [
+				'rowid' => $id,
+				'qty' => $qty
+			];
 
-			if ($data['id'] == $barang) {
+			$this->cart->update($data);
+		} else {
+			foreach ($this->cart->contents() as $data) {
+				$req = $this->Barang->getById($barang);
 
-				// echo $data['name'];
+				if ($data['id'] == $barang) {
 
-				if ($qty <= $req['stok']) {
-					$data = [
-						'rowid' => $id,
-						'qty' => $qty
-					];
+					// echo $data['name'];
 
-					$this->cart->update($data);
-					redirect('Keranjang');
-				} else {
-					echo 'gagal';
+					if ($qty <= $req['stok']) {
+						$data = [
+							'rowid' => $id,
+							'qty' => $qty
+						];
+
+						$this->cart->update($data);
+						redirect('Keranjang');
+					} else {
+						echo 'gagal';
+					}
 				}
 			}
 		}
@@ -149,5 +188,40 @@ class Keranjang extends CI_Controller
 		$this->cart->destroy();
 		$this->session->set_flashdata('alert', 'Checkout Berhasil');
 		echo $TransID;
+	}
+	
+	public function InsertPembelian()
+	{
+		date_default_timezone_set('Asia/Jakarta');
+		$total = $this->cart->total();
+		$suuplier = $this->input->post('supplier');
+		$data = [
+			'nama_supplier' => $suuplier,
+			'total_harga' => $total,
+			'tanggal' => date('Y-m-d H:i:s')
+		];
+
+
+		$this->db->trans_start();
+		$this->Transaksi->InsertPembelian($data);
+
+		$TransID = $this->db->insert_id();
+
+		$detail = array();
+		foreach ($this->cart->contents() as $items) {
+			$detail = [
+				'pembelian_id' => $TransID,
+				'barang_id' => $items['id'],
+				'jumlah' => $items['qty']
+			];
+
+			$this->db->insert('detail_pembelian', $detail);
+		}
+
+		$this->db->trans_complete();
+
+		$this->cart->destroy();
+		$this->session->set_flashdata('alert', 'Checkout Berhasil');
+		redirect('Transaksi/InvoicePembelian/'. $TransID);
 	}
 }

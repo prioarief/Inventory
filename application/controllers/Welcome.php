@@ -24,6 +24,7 @@ class Welcome extends CI_Controller
 				'title' => 'Dashboard',
 				'transaksi_pending' => count($this->Transaksi->getPendingTransaksi()),
 				'transaksi_sukses' => count($this->Transaksi->getSuccessTransaksi()),
+				'pembelian' => count($this->Transaksi->getAllPembelian()),
 				'barang' => count($this->Barang->get()),
 				'admin' => count($this->Admin->get()),
 				'pelanggan' => count($this->Auth->get()),
