@@ -25,6 +25,7 @@ class Transaksi extends CI_Controller
 		$data = [
 			'title' => 'Transaksi',
 			'transaksi' => $this->Transaksi->getSuccessTransaksi(),
+			'js' => 'transaksi.js'
 		];
 		$this->load->view('templates/header', $data);
 		$this->load->view('transaksi/transaksi', $data);
@@ -36,6 +37,7 @@ class Transaksi extends CI_Controller
 		$data = [
 			'title' => 'Transaksi',
 			'transaksi' => $this->Transaksi->getAllPembelian(),
+			'js' => 'transaksi.js'
 		];
 		$this->load->view('templates/header', $data);
 		$this->load->view('transaksi/pembelian', $data);
@@ -169,8 +171,46 @@ class Transaksi extends CI_Controller
 		ob_end_clean();
 		require './assets/pdf/vendor/autoload.php';
 		$pdf = new \Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'en');
-		$pdf->SetTitle('Invoice Details');
+		$pdf->pdf->SetTitle('Invoice Transaksi');
 		$pdf->WriteHTML($html);
 		$pdf->Output('Invoice Transaksi.pdf', 'I');
+	}
+	
+	public function CetakPenjualan($bulan = null)
+	{
+		$data = [
+			'title' => 'Penjualan',
+			'items' => $this->Transaksi->getPenjualanPerBulan($bulan),
+		];
+
+		ob_start();
+
+		$this->load->view('transaksi/laporanpenjualan', $data);
+		$html = ob_get_contents();
+		ob_end_clean();
+		require './assets/pdf/vendor/autoload.php';
+		$pdf = new \Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'en');
+		$pdf->pdf->SetTitle('Laporan Penjualan');
+		$pdf->WriteHTML($html);
+		$pdf->Output('Laporan Penjualan.pdf', 'I');
+	}
+	
+	public function CetakPembelian($bulan = null)
+	{
+		$data = [
+			'title' => 'Pembelian',
+			'items' => $this->Transaksi->getPembelianPerBulan($bulan),
+		];
+
+		ob_start();
+
+		$this->load->view('transaksi/laporanpembelian', $data);
+		$html = ob_get_contents();
+		ob_end_clean();
+		require './assets/pdf/vendor/autoload.php';
+		$pdf = new \Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'en');
+		$pdf->pdf->SetTitle('Laporan Pembelian');
+		$pdf->WriteHTML($html);
+		$pdf->Output('Laporan Pembelian.pdf', 'I');
 	}
 }

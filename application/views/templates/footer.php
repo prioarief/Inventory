@@ -11,7 +11,9 @@
 
 <!-- General JS Scripts -->
 <script src="<?= base_url() ?>assets/modules/jquery.min.js"></script>
-<script src="<?= base_url() ?>assets/js/<?= $js ?>"></script>
+<?php if ($js) : ?>
+	<script src="<?= base_url() ?>assets/js/<?= $js ?>"></script>
+<?php endif; ?>
 <script src="<?= base_url() ?>assets/js/node_modules/jquery/dist/jquery.min.js"></script>
 <script src="<?= base_url() ?>assets/js/node_modules/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="<?= base_url() ?>assets/modules/bootstrap/js/bootstrap.min.js"></script>

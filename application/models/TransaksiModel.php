@@ -6,12 +6,12 @@ class TransaksiModel extends CI_Model
 	{
 		return $this->db->get_where('penjualan', ['status' => 0])->result_array();
 	}
-	
+
 	public function getSuccessTransaksi()
 	{
 		return $this->db->get_where('penjualan', ['status' => 1])->result_array();
 	}
-	
+
 	// public function TransaksiGagal($id)
 	// {
 	// 	$this->db->where('id', $id);
@@ -23,7 +23,7 @@ class TransaksiModel extends CI_Model
 	{
 		$this->db->insert('penjualan', $data);
 	}
-	
+
 	public function InsertPembelian($data)
 	{
 		$this->db->insert('pembelian', $data);
@@ -38,7 +38,7 @@ class TransaksiModel extends CI_Model
 		$query = $this->db->get()->row_array();
 		return $query;
 	}
-	
+
 	public function getAllPembelian()
 	{
 		return $this->db->get_where('pembelian')->result_array();
@@ -73,10 +73,44 @@ class TransaksiModel extends CI_Model
 	{
 		return $this->db->get_where('penjualan', ['pelanggan_id' => $id])->result_array();
 	}
-	
+
 	public function Konfirmasi($id, $data)
 	{
 		$this->db->where('id', $id);
 		$this->db->update('penjualan', $data);
+	}
+
+	public function getPenjualanPerBulan($bulan = null)
+	{
+		if (!empty($bulan)) {
+			$this->db->select('penjualan.*');
+			$this->db->from('penjualan');
+			$this->db->where('MONTH(tanggal)', $bulan);
+			$this->db->order_by('tanggal', 'ASC');
+
+			return $this->db->get()->result_array();
+		} else {
+			$this->db->select('penjualan.*');
+			$this->db->from('penjualan');
+			$this->db->order_by('tanggal', 'ASC');
+			return $this->db->get()->result_array();
+		}
+	}
+	
+	public function getPembelianPerBulan($bulan = null)
+	{
+		if (!empty($bulan)) {
+			$this->db->select('pembelian.*');
+			$this->db->from('pembelian');
+			$this->db->where('MONTH(tanggal)', $bulan);
+			$this->db->order_by('tanggal', 'ASC');
+
+			return $this->db->get()->result_array();
+		} else {
+			$this->db->select('pembelian.*');
+			$this->db->from('pembelian');
+			$this->db->order_by('tanggal', 'ASC');
+			return $this->db->get()->result_array();
+		}
 	}
 }

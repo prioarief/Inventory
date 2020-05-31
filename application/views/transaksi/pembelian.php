@@ -40,6 +40,9 @@
 									</div>
 								</div>
 							</div>
+							<?php if ($this->session->userdata('role') == 'Super Admin') : ?>
+								<button class="btn btn-warning btn-icon" data-toggle="modal" data-target="#PrintPembelian">Print <i class="fas fa-print"></i></button>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
@@ -47,5 +50,27 @@
 
 		</div>
 	</section>
+
+	<div class="modal fade PrintPembelian" id="PrintPembelian" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">Cetak Pembelian</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h6>Pilih Bulan</h6>
+					<div class="row bulan">
+						
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </div>
