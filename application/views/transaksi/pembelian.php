@@ -28,8 +28,8 @@
 												<?php foreach ($transaksi as $tr) : ?>
 													<tr>
 														<td><?= date('d-m-Y H:i:s', strtotime($tr['tanggal'])) ?></td>
-														<td>Rp. <?= $tr['nama_supplier'] ?></td>
-														<td>Sukses </td>
+														<td>Rp. <?= number_format($tr['total_harga']) ?></td>
+														<td><?= $tr['nama_supplier'] ?></td>
 														<td>
 															<a href="<?= base_url('Transaksi/InvoicePembelian/' . $tr['id']) ?>" class="badge badge-info badge-sm" title="Detail">Detail</a>
 														</td>

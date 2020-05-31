@@ -29,10 +29,10 @@ $(document).ready(function () {
 		$.ajax({
 			url : `${url}Transaksi/Konfirmasi/${id}`,
 			success :function(data){
-				swal("Sukses", "Konfrimasi Berhasil!", "success");
+				swal("Sukses", "Konfirmasi Berhasil!", "success");
 				let fake_ajax = setTimeout(function () {
 					clearInterval(fake_ajax);
-					document.location.href = `${url}Transaksi/Penjualan`;
+					document.location.href = `${url}Transaksi/Invoice/${id}`;
 				}, 2000);
 			}
 		});
@@ -47,7 +47,7 @@ $(document).ready(function () {
 				swal("Sukses", "Transaksi Berhasil Di Batalkan!", "success");
 				let fake_ajax = setTimeout(function () {
 					clearInterval(fake_ajax);
-					document.location.href = `${url}Transaksi/Penjualan`;
+					document.location.href = `${url}Transaksi/Invoice/${id}`;
 				}, 2000);
 			}
 		});

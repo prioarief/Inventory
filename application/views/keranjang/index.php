@@ -83,7 +83,7 @@
 														<i class="fas fa-user-circle"></i>
 													</div>
 												</div>
-												<input type="text" class="form-control" placeholder="Nama Supplier" id="supplier" name="supplier">
+												<input type="text" class="form-control" placeholder="Nama Supplier" required id="supplier" name="supplier">
 											</div>
 										</div>
 										<button type="submit" class="btn btn-info float-right checkoutBeli">Checkout</button>

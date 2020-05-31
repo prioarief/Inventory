@@ -189,39 +189,56 @@ class Keranjang extends CI_Controller
 		$this->session->set_flashdata('alert', 'Checkout Berhasil');
 		echo $TransID;
 	}
-	
+
 	public function InsertPembelian()
 	{
-		date_default_timezone_set('Asia/Jakarta');
-		$total = $this->cart->total();
-		$suuplier = $this->input->post('supplier');
-		$data = [
-			'nama_supplier' => $suuplier,
-			'total_harga' => $total,
-			'tanggal' => date('Y-m-d H:i:s')
-		];
-
-
-		$this->db->trans_start();
-		$this->Transaksi->InsertPembelian($data);
-
-		$TransID = $this->db->insert_id();
-
-		$detail = array();
-		foreach ($this->cart->contents() as $items) {
-			$detail = [
-				'pembelian_id' => $TransID,
-				'barang_id' => $items['id'],
-				'jumlah' => $items['qty']
+		if (empty($this->cart->contents())|| empty($this->input->post('supplier'))) {
+			$this->session->set_flashdata('alert', 'Checkout Gagal, Keranjang Harus Diisi!');
+			redirect('Keranjang/Pembelian');
+		} else {
+			date_default_timezone_set('Asia/Jakarta');
+			$total = $this->cart->total();
+			$suuplier = $this->input->post('supplier');
+			$data = [
+				'nama_supplier' => $suuplier,
+				'total_harga' => $total,
+				'tanggal' => date('Y-m-d H:i:s')
 			];
 
-			$this->db->insert('detail_pembelian', $detail);
+
+			$this->db->trans_start();
+			$this->Transaksi->InsertPembelian($data);
+
+			$TransID = $this->db->insert_id();
+
+			$detail = array();
+			foreach ($this->cart->contents() as $items) {
+				$detail = [
+					'pembelian_id' => $TransID,
+					'barang_id' => $items['id'],
+					'jumlah' => $items['qty']
+				];
+
+				$this->db->insert('detail_pembelian', $detail);
+			}
+
+			$barang = $this->Transaksi->detailPembelian($TransID);
+			foreach ($barang as $item) {
+				$request = $this->Barang->getById($item['barang_id']);
+				if ($request['id'] == $item['barang_id']) {
+					$data = [
+						'stok' => $request['stok'] + $item['jumlah']
+					];
+
+					$this->Barang->EditBarang($item['barang_id'], $data);
+				}
+			}
+
+			$this->db->trans_complete();
+
+			$this->cart->destroy();
+			$this->session->set_flashdata('alert', 'Checkout Berhasil');
+			redirect('Transaksi/InvoicePembelian/' . $TransID);
 		}
-
-		$this->db->trans_complete();
-
-		$this->cart->destroy();
-		$this->session->set_flashdata('alert', 'Checkout Berhasil');
-		redirect('Transaksi/InvoicePembelian/'. $TransID);
 	}
 }

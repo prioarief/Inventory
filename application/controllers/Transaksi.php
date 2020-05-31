@@ -30,7 +30,7 @@ class Transaksi extends CI_Controller
 		$this->load->view('transaksi/transaksi', $data);
 		$this->load->view('templates/footer');
 	}
-	
+
 	public function Pembelian()
 	{
 		$data = [
@@ -57,7 +57,7 @@ class Transaksi extends CI_Controller
 		$this->load->view('transaksi/invoice', $data);
 		$this->load->view('templates/footer');
 	}
-	
+
 	public function InvoicePembelian($id = null)
 	{
 		if (is_null($id)) {
@@ -116,7 +116,7 @@ class Transaksi extends CI_Controller
 			$barang = $this->Transaksi->detailTransaction($id);
 			foreach ($barang as $item) {
 				$request = $this->Barang->getById($item['barang_id']);
-				if($request['id'] == $item['barang_id']){
+				if ($request['id'] == $item['barang_id']) {
 					$data = [
 						'stok' => $request['stok'] - $item['jumlah']
 					];
@@ -124,13 +124,13 @@ class Transaksi extends CI_Controller
 					$this->Barang->EditBarang($item['barang_id'], $data);
 				}
 			}
-			redirect('Transaksi/Penjualan');
+			// redirect('Transaksi/Penjualan');
 		} else {
 			die;
 			redirect('Welcome');
 		}
 	}
-	
+
 	public function TransaksiGagal($id = null)
 	{
 		if (is_null($id)) {
@@ -149,5 +149,28 @@ class Transaksi extends CI_Controller
 			die;
 			redirect('Welcome');
 		}
+	}
+
+	public function CetakInvoice($id = null)
+	{
+		if (is_null($id)) {
+			redirect('Barang');
+		}
+		$data = [
+			'title' => 'Invoice',
+			'customer' => $this->Transaksi->getCustomer($id),
+			'item' => $this->Transaksi->detailTransaction($id),
+		];
+
+		ob_start();
+
+		$this->load->view('transaksi/cetakinvoice', $data);
+		$html = ob_get_contents();
+		ob_end_clean();
+		require './assets/pdf/vendor/autoload.php';
+		$pdf = new \Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'en');
+		$pdf->SetTitle('Invoice Details');
+		$pdf->WriteHTML($html);
+		$pdf->Output('Invoice Transaksi.pdf', 'I');
 	}
 }

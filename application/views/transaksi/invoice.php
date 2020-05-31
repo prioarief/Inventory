@@ -92,7 +92,7 @@
 						<?php endif; ?>
 					<?php endif; ?>
 					<?php if ($customer['status'] != 2) : ?>
-						<button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+						<a href="<?= base_url('Transaksi/CetakInvoice/'. $customer['id']) ?>" target="blank" class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</a>
 					<?php endif; ?>
 				</div>
 			</div>
