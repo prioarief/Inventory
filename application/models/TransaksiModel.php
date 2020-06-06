@@ -7,17 +7,16 @@ class TransaksiModel extends CI_Model
 		return $this->db->get_where('penjualan', ['status' => 0])->result_array();
 	}
 
-	public function getSuccessTransaksi()
+	public function getSuccessTransaksi() 
 	{
-		return $this->db->get_where('penjualan', ['status' => 1])->result_array();
+		// return $this->db->get_where('penjualan', ['status' => 1])->result_array();
+		$this->db->select('penjualan.*');
+		$this->db->from('penjualan');
+		$this->db->where('status', 1);
+		$this->db->order_by('tanggal', 'ASC');
+		$query =  $this->db->get()->result_array();
+		return $query;
 	}
-
-	// public function TransaksiGagal($id)
-	// {
-	// 	$this->db->where('id', $id);
-	// 	$this->db->delete('penjualan');
-	// }
-
 
 	public function InsertTransaction($data)
 	{

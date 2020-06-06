@@ -27,7 +27,7 @@
 			<?= date('d-m-Y H:i:s', strtotime($customer['tanggal'])) ?><br>
 			<strong>Status Pembelian :</strong>
 			<?php if ($customer['status'] == 0) {
-				echo '<mark>Pending (Menunggu konfirmasi Admin)</mark>' . '<br>';
+				echo 'Pending (Menunggu konfirmasi Admin)' . '<br>';
 			} elseif ($customer['status'] == 2) {
 				echo 'Transaksi Di Batalkan' . '<br>';
 			} else {
