@@ -64,7 +64,7 @@
 				</div>
 				<hr>
 				<div class="text-md-right">
-					<button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+					<a href="<?= base_url('Transaksi/CetakInvoicePembelian/' . $supplier['id']) ?>" target="blank" class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</a>
 				</div>
 			</div>
 		</div>

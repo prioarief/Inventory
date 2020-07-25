@@ -48,7 +48,7 @@ class Transaksi extends CI_Controller
 	public function Invoice($id = null)
 	{
 		if (is_null($id)) {
-			redirect('Barang');
+			redirect('Barang'); 
 		}
 		$data = [
 			'title' => 'Invoice',
@@ -174,6 +174,29 @@ class Transaksi extends CI_Controller
 		$pdf->pdf->SetTitle('Invoice Transaksi');
 		$pdf->WriteHTML($html);
 		$pdf->Output('Invoice Transaksi.pdf', 'I');
+	}
+	
+	public function CetakInvoicePembelian($id = null)
+	{
+		if (is_null($id)) {
+			redirect('Barang');
+		}
+		$data = [
+			'title' => 'Invoice',
+			'supplier' => $this->Transaksi->getPembelian($id),
+			'item' => $this->Transaksi->detailPembelian($id),
+		];
+
+		ob_start();
+
+		$this->load->view('transaksi/cetakinvoicePembelian', $data);
+		$html = ob_get_contents();
+		ob_end_clean();
+		require './assets/pdf/vendor/autoload.php';
+		$pdf = new \Spipu\Html2Pdf\Html2Pdf('P', 'A4', 'en');
+		$pdf->pdf->SetTitle('Invoice Pembelian');
+		$pdf->WriteHTML($html);
+		$pdf->Output('Invoice Pembelian.pdf', 'I');
 	}
 	
 	public function CetakPenjualan($bulan = null)
