@@ -46,16 +46,18 @@
 								</div>
 							</a>
 						</div>
-						<div class="col-md-4">
-							<a href="<?= base_url() ?>Keranjang" class="text-dark" style="text-decoration: none">
-								<div class="card shadow-md" style="border-bottom: solid 7px red; ">
-									<div class="container py-4">
-										<i class="fas fa-users-cog" style="font-size: 2.5rem"></i>
-										<h6 class="my-2">Data Admin <small class="text-danger" style="font-size: 17px">(<?= $admin ?>)</small></h6>
+						<?php if ($this->session->userdata('role') == 'Super Admin') : ?>
+							<div class="col-md-4">
+								<a href="<?= base_url() ?>Admin" class="text-dark" style="text-decoration: none">
+									<div class="card shadow-md" style="border-bottom: solid 7px red; ">
+										<div class="container py-4">
+											<i class="fas fa-users-cog" style="font-size: 2.5rem"></i>
+											<h6 class="my-2">Data Admin <small class="text-danger" style="font-size: 17px">(<?= $admin ?>)</small></h6>
+										</div>
 									</div>
-								</div>
-							</a>
-						</div>
+								</a>
+							</div>
+						<?php endif; ?>
 						<div class="col-md-4">
 							<a href="<?= base_url() ?>Keranjang" class="text-dark" style="text-decoration: none">
 								<div class="card shadow-md" style="border-bottom: solid 7px green; ">

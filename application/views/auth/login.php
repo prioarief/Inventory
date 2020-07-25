@@ -43,7 +43,8 @@
 
 						<div class="card card-primary">
 							<div class="card-header">
-								<h4>Login</h4>
+								<!-- <h4>Login</h4> -->
+								<img src="<?= base_url() ?>/assets/img/logo.jpeg" class="m-auto" style="width: 60%;" alt="logo">
 							</div>
 							<div class="container">
 								<?php if ($this->session->flashdata('alert')) : ?>

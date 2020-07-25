@@ -73,7 +73,7 @@
 			<div class="main-sidebar sidebar-style-2">
 				<aside id="sidebar-wrapper">
 					<div class="sidebar-brand">
-						<a href="index.html">Management Barang</a>
+						<img src="<?= base_url() ?>/assets/img/logo-dashboard.jpeg" class="my-1" style="width: 30%;" alt="logo">
 					</div>
 					<div class="sidebar-brand sidebar-brand-sm">
 						<a href="index.html">MB</a>
