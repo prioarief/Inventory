@@ -87,6 +87,16 @@
 							<li><a class="nav-link" href="<?= base_url() ?>Transaksi/Pembelian"><i class="fas fa-cart-plus"></i> <span>Data Pembelian</span></a></li>
 							<li><a class="nav-link" href="<?= base_url() ?>Welcome/Pelanggan"><i class="fas fa-users"></i> <span>Data Pelanggan</span></a></li>
 							<?php if ($this->session->userdata('role') == 'Super Admin') : ?>
+								<li class="dropdown">
+									<a href="#" class="nav-link has-dropdown"><i class="fas fa-chart-area"></i> <span>Laporan</span></a>
+									<ul class="dropdown-menu">
+										<li><a href="<?= base_url() ?>Laporan/BarangMasuk">Barang Masuk</a></li>
+										<li><a href="<?= base_url() ?>Laporan/BarangKeluar">Barang Keluar</a></li>
+										<li><a href="<?= base_url() ?>Laporan/DataPelanggan">Data Pelanggan</a></li>
+										<li><a href="<?= base_url() ?>Laporan/Laba">Laporan Laba</a></li>
+										<li><a href="<?= base_url() ?>Laporan/StokBarang">Laporan Stok</a></li>
+									</ul>
+								</li>
 								<li><a class="nav-link" href="<?= base_url() ?>Admin"><i class="fas fa-users-cog"></i> <span>Data Admin</span></a></li>
 							<?php endif; ?>
 							<li>
