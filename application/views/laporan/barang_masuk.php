@@ -38,7 +38,7 @@
 					</div>
 				</div>
 			</div>
-			<a href="<?= base_url('Laporan/Cetak/barang_keluar') ?>" target="blank" class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</a>
+			<a href="<?= base_url('Laporan/Cetak/barang_masuk') ?>" target="blank" class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</a>
 		</div>
 	</section>
 </div>

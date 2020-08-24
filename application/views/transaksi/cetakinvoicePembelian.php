@@ -41,9 +41,9 @@
 			<tr>
 				<td><?= $no++ ?></td>
 				<td><?= $brg['nama_barang'] ?></td>
-				<td class="text-center">Rp. <?= number_format($brg['harga_jual']) ?></td>
+				<td class="text-center">Rp. <?= number_format($brg['harga_beli']) ?></td>
 				<td class="text-center"><?= $brg['jumlah'] ?></td>
-				<td class="text-right">Rp. <?= number_format($brg['harga_jual'] * $brg['jumlah']) ?></td>
+				<td class="text-right">Rp. <?= number_format($brg['harga_beli'] * $brg['jumlah']) ?></td>
 			</tr>
 		<?php endforeach; ?>
 		<tr>
